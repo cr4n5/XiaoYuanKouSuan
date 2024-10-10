@@ -9,6 +9,7 @@ import number_command
 import time
 import tkinter as tk
 from tkinter import messagebox
+import argparse
 
 def request(flow: http.HTTPFlow) -> None:
     # 处理请求
@@ -117,6 +118,10 @@ def gui_answer(answer):
     # number_command.run_adb_command(command)
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Mitmproxy script")
+    parser.add_argument("-p", "--port", type=int, default=8080, help="Port to listen on")
+    parser.add_argument("-h", "--host", type=str, default="0.0.0.0", help="Host to listen on")
+    args = parser.parse_args()
 
-    sys.argv = ["mitmdump", "-s", __file__, "--listen-host", "0.0.0.0", "--listen-port", "8080"]
+    sys.argv = ["mitmdump", "-s", __file__, "--listen-host", args.host, "--listen-port", str(args.port)]
     mitmdump()

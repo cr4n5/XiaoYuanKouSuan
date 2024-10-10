@@ -26,12 +26,17 @@ def get_device_resolution():
     else:
         raise Exception("无法获取设备分辨率")
 
-def run_adb_command(commands):
-    # 批量执行 ADB 命令
-    for command in commands:
-        result = subprocess.run(["adb", "shell", command], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        if result.returncode != 0:
-            print(f"命令执行失败: {result.stderr}")
+def run_adb_command(command):
+    # 使用 Popen 打开一个持久的 adb shell 会话并发送所有命令
+    try:
+        with subprocess.Popen(["adb", "shell"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) as process:
+            stdout, stderr = process.communicate(command)
+            if stderr:
+                print(f"ADB 错误: {stderr}")
+            return stdout
+    except Exception as e:
+        print(f"ADB 命令执行失败: {e}")
+        return None
 
 def swipe_screen(command_str, base_resolution=(1800, 2880)):
     current_resolution = get_device_resolution()
@@ -39,13 +44,13 @@ def swipe_screen(command_str, base_resolution=(1800, 2880)):
     scale_factor_y = current_resolution[1] / base_resolution[1]
 
     xy_paths = str_to_xy(command_str, scale_factor_x, scale_factor_y)
+    all_commands = ""
     if xy_paths:
-        adb_commands = []
         for path in xy_paths:
             for i in range(len(path) - 1):
-                adb_commands.append(f"input swipe {path[i][0]} {path[i][1]} {path[i+1][0]} {path[i+1][1]} 0")
-        # 批量执行命令
-        run_adb_command(adb_commands)
+                command = f"input swipe {path[i][0]} {path[i][1]} {path[i+1][0]} {path[i+1][1]} 0"
+                all_commands += command + "\n"
+        run_adb_command(all_commands)
 
 def scale_coordinates(base_coordinates, scale_x, scale_y):
     # 缩放所有坐标

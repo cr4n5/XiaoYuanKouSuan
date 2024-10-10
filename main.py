@@ -119,14 +119,21 @@ def check_adb_installed():
 # ADB 连接设备
 def connect_adb_wireless(adb_ip):
     try:
-        result = subprocess.run(["adb", "connect", adb_ip], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        if "connected" not in result.stdout:
-            print(f"ADB 连接失败: {result.stderr}")
+        # 指定编码为 utf-8
+        result = subprocess.run(["adb", "connect", adb_ip], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding='utf-8')
+        
+        # 确保 result.stdout 不为 None，并检查是否包含 "connected"
+        if result.stdout and "connected" in result.stdout:
+            print(f"已连接到 {adb_ip}")
+        else:
+            # 如果 stderr 有内容，则打印详细错误信息；否则提供默认提示
+            error_message = result.stderr if result.stderr else "请确认 IP 与端口是否正确"
+            print(f"ADB 连接失败: {error_message}")
             sys.exit(1)
-        print(f"已连接到 {adb_ip}")
     except subprocess.CalledProcessError as e:
         print(f"ADB 连接错误: {e}")
         sys.exit(1)
+
 
 # 主程序
 if __name__ == "__main__":

@@ -10,15 +10,15 @@
 
 ## 目录
 
-- [演示视频](#演示视频):movie_camera:
+- [演示视频​ :movie_camera:](#演示视频)
 - [碎碎念 :thought_balloon:](#碎碎念-thought_balloon)
 - [环境配置 :hammer_and_wrench:](#环境配置-hammer_and_wrench)
 - [代码修改 :pencil2:](#代码修改-pencil2)
-- [使用 :hammer_and_wrench:](#使用-hammer_and_wrench)
+- [使用 :smile:](#使用-smile)
 - [Q&A :question:](#Q&A-question)
 - [贡献 :sparkles:](#贡献-sparkles)
 
-## 演示视频:movie_camera:
+## 演示视频 :movie_camera:
 
 https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00
 
@@ -76,7 +76,7 @@ def answer_write(answer):
         time.sleep(0.3)
 ```
 
-## 使用 :hammer_and_wrench:
+## 使用 :smile:
 
 1. 安装依赖
 
@@ -90,7 +90,32 @@ def answer_write(answer):
 
 3. 配置 adb
 
-   打开设置-开发者选项- usb 调试后，键入指令
+   - 有线调试
+
+     **请先用数据线连接脚本端设备与移动端设备**
+
+     打开设置-开发者选项- USB 调试
+
+   - 无线连接
+
+     **请确保脚本端设备与移动端在同一局域网下**
+
+     打开设置-开发者选项-无线调试，并记录界面显示的 IP 地址与端口
+
+     （大部分设备首次需要先把「有线调试步骤中」的 USB 调试打开，并在**有线连接**的前提下，同意随即弹出的**允许 USB 调试吗**窗口以完成对设备的调试授权，建议勾选一律允许该设备调试。完成授权后，即可拔掉数据线进行无线调试。）
+
+     键入指令：
+
+     ```shell
+     adb connect ip:port
+     # e.g.
+     # adb connect 192.168.0.101:5555（下文中，无线调试以此为例）
+     
+     # 正确返回以下格式
+     connected to 192.168.0.101:5555
+     ```
+
+   完成上面任一步骤后，键入指令
 
    ```shell
    adb devices
@@ -103,6 +128,22 @@ def answer_write(answer):
    ```
 
    以确认 adb 是否在本机正确配置成功并连接
+
+   > [!TIP] 
+   >
+   > **我该选择什么方式？**
+   >
+   > 上面方式适用于不同情况：
+   >
+   > - 有线调试
+   >
+   >   只需要插入数据线，确保完成连接后，按照后续操作即可，一般传参无需变化，但需要**保持有线连接**
+   >
+   > - 无线调试
+   >
+   >   适用于你想在局域网下任意位置（如您的床上）进行 PK，但一般而言，无线调试状态会在重启后关闭，并且每次启用都会变更端口，因而你每次运行脚本都需要获取新的无线调试 IP 并传入
+
+   
 
 4. 配置设备代理
 
@@ -133,14 +174,42 @@ def answer_write(answer):
    运行格式为：
 
    ```shell
-   python main.py -H <host> -P <port>
+   python main.py -H <host> -P <port> -AI <adb-ip>
    ```
 
-   绝大部分情况下，直接运行以下即可：
+   > [!CAUTION]
+   >
+   > 有线调试情况下，无需指定 -AI 的参数，仅适用于**无线调试**
+
+   绝大部分情况下，直接键入以下即可：
+
+   ```python
+   python main.py
+   ```
+
+   将默认填充参数 Host 为 0.0.0.0，Port 为 8080 运行，等同于以下：
 
    ```shell
-    python main.py -H 0.0.0.0 -P 8080
+   python main.py -H 0.0.0.0 -P 8080
    ```
+
+   对于**无线调试**：
+
+   假设您在无线调试页面获取的 IP 为 192.168.0.101:5555，那么您应该运行：
+
+   ```shell
+   python main.py -H 0.0.0.0 -P 8080 -AI 192.168.0.101:5555
+   ```
+
+   绝大多数情况下，直接键入以下即可：
+
+   ```shell
+   python main.py -AI 192.168.0.101:5555
+   ```
+
+   将默认填充参数 Host 为 0.0.0.0，Port 为 8080 运行，并与该 IP 设备进行无线调试连接。
+
+   
 
    正常情况下，您将看到控制台开始输出大量请求日志，那么您应该离成功不远了。
 
@@ -148,9 +217,17 @@ def answer_write(answer):
 
 ## Q&A :question:
 
-- 运行提示 `ADB 未找到，请先安装 ADB 工具`？
+- **运行提示 `ADB 未找到，请先安装 ADB 工具`？**
 
   请检查当前设备是否正确安装 adb 工具，需将 adb 添加至设备环境变量（亦可以修改代码手动指定 adb 路径）。
+- **无线调试未找到设备？**
+
+  - 请确认脚本端设备与移动端设备保持在同一局域网下
+
+  - 请确认移动端设备是否对脚本端设备进行过 USB 调试授权
+
+    若在之前未进行过有线调试，需要至少完成有线调试步骤，以进行调试授权
+
 ## 贡献 :sparkles:
 
 本库仍在不断更新完善与丰富功能当中，欢迎您共同参与！

@@ -136,7 +136,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Mitmproxy script")
     parser.add_argument("-P", "--port", type=int, default=8080, help="Port to listen on")
     parser.add_argument("-H", "--host", type=str, default="0.0.0.0", help="Host to listen on")
-    parser.add_argument("-WI", "--adb-ip", type=str, help="IP and port for ADB wireless connection (e.g., 192.168.0.101:5555)")
+    parser.add_argument("-AI", "--adb-ip", type=str, help="IP and port for ADB wireless connection (e.g., 192.168.0.101:5555)")
     args = parser.parse_args()
 
     # 如果指定了 ADB IP，进行无线调试连接

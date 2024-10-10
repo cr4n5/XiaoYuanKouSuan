@@ -1,7 +1,8 @@
 # XIaoYuanKouSuan
 
-- 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作，比机器视觉识别更快更准确！
-- 方案二： 修改所有答案为“1”（推荐使用方案二）[方案二链接](Change_Answer/README.md)
+- 方案一： 小猿口算 - MIMT, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作，比机器视觉识别更快更准确！一键启动</br>
+- 方案一支持各种比大小，其他比赛很快就能支持
+- 方案二： 修改所有答案为“1”（推荐使用方案二）[方案二链接](Change_Answer/README.md) （画饼中：可以融入方案一）
 
 ![Language](https://img.shields.io/badge/language-python-blue?logo=python)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
@@ -21,9 +22,13 @@
   - [代码修改 :pencil2:](#代码修改-pencil2)
   - [使用 :hammer\_and\_wrench:](#使用-hammer_and_wrench)
 
-## 演示视频
+## 演示视频（过时了）
 
 https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00
+
+## 效果图（最新版）
+
+![img.png](img.png)
 
 ## 碎碎念 :thought_balloon:
 
@@ -31,7 +36,7 @@ https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00
 
 ## 环境配置 :hammer_and_wrench:
 
-1. root 的安卓设备(lsposed 等) :iphone:
+1. 能开启adb的设备 建议mumu模拟器 :iphone:
 2. python3 :snake:
 3. adb :electric_plug:
 
@@ -61,7 +66,16 @@ def str_to_xy(str):
 ```
 
 > [!TIP]
-> 根据设备分辨率修改坐标（同元组内坐标连续滑动）
+> 根据设备分辨率修改坐标（同元组内坐标连续滑动），坐标已自适应不需要手动修改
+
+
+```python
+adb_ip = "127.0.0.1"
+adb_port = 16384
+```
+
+> [!TIP]
+> 请前往`mitmCode/adb`修改连接adb的ip和地址
 
 ```bash
 # 查看当前分辨率
@@ -73,48 +87,37 @@ adb shell wm size 1800x2880
 ```
 
 ```python
-def answer_write(answer):
-
-    for i in range(len(answer)):
-        number_command.swipe_screen(answer[i])
-        # time.sleep(0.16)
-        time.sleep(0.3)
+for idx, question in enumerate(questions):
+    answer = question.get("answer", None)
+    swipe_screen(answer)
+    logger.info(f"完成题目{idx + 1}|答案：{answer}")
+    time.sleep(0.2)
 ```
 
 根据所需更改每个题目间隔时间
 
 ## 使用 :hammer_and_wrench:
 
-1. 安装依赖
+1. 使用虚拟环境安装依赖 PowerShell
 
 ```shell
+python -m venv your_venv_name
+.\your_venv_name\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
-2. 配置 root 设备
-
-采用 trust me already 禁用 app ssl
-
 3. 配置 adb
 
-- 打开开发者选项中的 usb 调试
-
-```shell
-adb devices
-```
+- 打开开发者选项中的 usb 调试，推荐使用[mumu模拟器](https://mumu.163.com/help/20230214/35047_1073151.html)
 
 4. 配置安卓代理
 
-WIFI 设置代理为电脑 ip 和端口(8080)
+- WIFI 设置代理为电脑 ip 和端口(8080) [教程](https://mumu.163.com/help/20230214/35047_1073151.html)
 
 5. 运行
 
 ```shell
-python main.py -H <host> -P <port>
+cd mitmCode
+mitmweb -s __init__.py --quiet
 ```
 
-例如：
-
-```shell
-python main.py -H 0.0.0.0 -P 8080
-```

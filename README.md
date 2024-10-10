@@ -7,6 +7,14 @@
 ![Forks](https://img.shields.io/github/forks/cr4n5/XiaoYuanKouSuan.svg)
 ![Issues](https://img.shields.io/github/issues/cr4n5/XiaoYuanKouSuan.svg)
 
+## 目录
+
+- [演示视频](#演示视频)
+- [碎碎念 :thought_balloon:](#碎碎念-:thought_balloon:)
+- [环境配置 :hammer_and_wrench:](#环境配置-:hammer_and_wrench:)
+- [代码修改 :pencil2:](#代码修改-:pencil2:)
+- [使用 :hammer_and_wrench:](#使用-:hammer_and_wrench:)
+
 ## 演示视频
 
 https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00

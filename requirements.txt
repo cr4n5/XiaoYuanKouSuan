@@ -1,2 +1,1 @@
 mitmproxy
-tkinter

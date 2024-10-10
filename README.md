@@ -1,7 +1,9 @@
 # XIaoYuanKouSuan
 
-- 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作，比机器视觉识别更快更准确！
-- 方案二： 修改所有答案为“1”（推荐使用方案二）[方案二链接](Change_Answer/README.md)
+本项目已突破0.01s
+
+- 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作
+- 方案二： 修改所有答案为“1”（强烈推荐使用方案二，可0.01s）[方案二链接](Change_Answer/README.md)
 
 ![Language](https://img.shields.io/badge/language-python-blue?logo=python)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
@@ -11,9 +13,16 @@
 
 - [安卓模拟器使用教程](README_EMULATOR.md)
 
+## 战绩可查
+
+![0.01s](doc/img/8eb980c85f8f8798f3777fc47ffedd4.jpg)
+![0.00s](doc/img/5c3b67fb34956a41a2322553f8f4069.jpg)
+在“READY GO”加载出来之前，可在画板滑动，即可达到0.00s，但是无法上传结果
+
 ## 目录
 
 - [XIaoYuanKouSuan](#xiaoyuankousuan)
+  - [战绩可查](#战绩可查)
   - [目录](#目录)
   - [演示视频](#演示视频)
   - [碎碎念 :thought\_balloon:](#碎碎念-thought_balloon)

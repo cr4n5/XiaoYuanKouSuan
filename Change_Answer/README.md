@@ -1,10 +1,8 @@
 # XIaoYuanKouSuan
 
-[思路来自](https://github.com/wyp010428/xiaoyuankousuan)  ios教程在这里，以下为Android教程
-
 ## 所需 :hammer_and_wrench:
 
-1. root 的安卓设备(lsposed,magisk 等) :iphone:
+1. root 的安卓设备，虚拟机也可(lsposed,magisk 等) :iphone:
 2. python3(非必须) :snake:
 3. adb(非必须) :electric_plug:
 
@@ -32,6 +30,14 @@ https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match?
 - 练习场 url头
 https://xyks.yuanfudao.com/leo-math/android/exams?
 
+### 替换所有题目答案为1
+
 - 正则表达式匹配(pk与练习场同理)
-`"answer":\s*".*?"` 匹配为 `"answer": "1"`
-`"answers":\s*\[.*?\]` 匹配为 `"answers": ["1"]`
+- `"answer":\s*".*?"` 匹配为 `"answer": "1"`
+- `"answers":\s*\[.*?\]` 匹配为 `"answers": ["1"]`
+
+### 将题目减少到1题，答案为1，一直滑动手指即可0.01s！！！
+
+- 正则表达式匹配(pk与练习场同理)
+- `"questionCnt":\s*\d+` 匹配为 `"questionCnt": 1`
+- `"questions":\s*\[.*\],` 匹配为 `"questions": [{"id": 1,"content": "9+\\\\square=12","answer": "1","userAnswer": null,"answers": ["1"],"script": null,"wrongScript": null,"status": 0,"errorState": 0,"costTime": 0}],`

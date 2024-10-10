@@ -1,3 +1,4 @@
+import time
 import subprocess
 from functools import lru_cache
 
@@ -14,6 +15,15 @@ BASE_COORDINATES = {
     "<": [[[1578, 1058], [1308, 1231], [1560, 1292]]],
     "=": [[[1284, 1122], [1700, 1122], [1280, 1300], [1700, 1300]]]
 }
+
+NEXT_BUTTON_COORDINATES = {
+    "next_1": [1400, 900], 
+    "next_2": [2160, 1720], 
+    "next_3": [1475, 1490], 
+}
+
+scale_x = 1
+scale_y = 1
 
 @lru_cache()
 def get_device_resolution():
@@ -35,10 +45,12 @@ def run_adb_command(commands):
 
 def swipe_screen(command_str, base_resolution=(1800, 2880)):
     current_resolution = get_device_resolution()
-    scale_factor_x = current_resolution[0] / base_resolution[0]
-    scale_factor_y = current_resolution[1] / base_resolution[1]
+    global scale_x
+    global scale_y
+    scale_x = current_resolution[0] / base_resolution[0]
+    scale_y = current_resolution[1] / base_resolution[1]
 
-    xy_paths = str_to_xy(command_str, scale_factor_x, scale_factor_y)
+    xy_paths = str_to_xy(command_str, scale_x, scale_y)
     if xy_paths:
         adb_commands = []
         for path in xy_paths:
@@ -51,11 +63,26 @@ def scale_coordinates(base_coordinates, scale_x, scale_y):
     # 缩放所有坐标
     return [[(int(x * scale_x), int(y * scale_y)) for (x, y) in path] for path in base_coordinates]
 
+def scale_coordinates_for_tap(coordinate, scale_x, scale_y):
+    # 缩放一个点坐标
+    return [int(coordinate[0] * scale_x), int(coordinate[1] * scale_y)]
+
 def str_to_xy(command_str, scale_x, scale_y):
     if command_str in BASE_COORDINATES:
         return scale_coordinates(BASE_COORDINATES[command_str], scale_x, scale_y)
     else:
         return None
+
+def click_screen(xy):
+    command = [f"input tap {xy[0]} {xy[1]}"]
+    run_adb_command(command)
+
+def next_round():
+    click_screen( scale_coordinates_for_tap(NEXT_BUTTON_COORDINATES["next_1"], scale_x, scale_y) )
+    time.sleep(0.5)
+    click_screen( scale_coordinates_for_tap(NEXT_BUTTON_COORDINATES["next_2"], scale_x, scale_y) )
+    time.sleep(0.5)
+    click_screen( scale_coordinates_for_tap(NEXT_BUTTON_COORDINATES["next_3"], scale_x, scale_y) )
 
 if __name__ == "__main__":
     # 执行滑动操作

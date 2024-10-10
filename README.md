@@ -1,6 +1,6 @@
 # XIaoYuanKouSuan
 
-小猿口算
+小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作，比机器识别更快更准确！
 
 ![Language](https://img.shields.io/badge/language-python-blue.svg)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
@@ -86,5 +86,11 @@ WIFI 设置代理为电脑 ip 和端口(8080)
 5. 运行
 
 ```shell
-python main.py
+python main.py -H <host> -p <port>
+```
+
+例如：
+
+```shell
+python main.py -H 0.0.0.0 -p 8080
 ```

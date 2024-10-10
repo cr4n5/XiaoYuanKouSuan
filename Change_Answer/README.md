@@ -30,6 +30,8 @@ https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match?
 - 练习场 url头
 https://xyks.yuanfudao.com/leo-math/android/exams?
 
+以下场景二选一
+
 ### 替换所有题目答案为1
 
 - 正则表达式匹配(pk与练习场同理)

@@ -34,4 +34,4 @@ https://xyks.yuanfudao.com/leo-math/android/exams?
 
 - 正则表达式匹配(pk与练习场同理)
 `"answer":\s*".*?"` 匹配为 `"answer": "1"`
-`"answers":\s*\[.*?\]` 匹配为 `"answers": [1]`
+`"answers":\s*\[.*?\]` 匹配为 `"answers": ["1"]`

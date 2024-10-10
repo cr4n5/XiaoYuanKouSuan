@@ -54,6 +54,7 @@ def str_to_xy(str):
         case "=":
             return [[[1284, 1122], [1700, 1122]],[[1280, 1300], [1700, 1300]]]
 ```
+
 > [!TIP]
 > 根据设备分辨率修改坐标（同元组内坐标连续滑动）
 
@@ -104,11 +105,11 @@ WIFI 设置代理为电脑 ip 和端口(8080)
 5. 运行
 
 ```shell
-python main.py -H <host> -p <port>
+python main.py -H <host> -P <port>
 ```
 
 例如：
 
 ```shell
-python main.py -H 0.0.0.0 -p 8080
+python main.py -H 0.0.0.0 -P 8080
 ```

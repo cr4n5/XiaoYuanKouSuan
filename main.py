@@ -140,5 +140,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     sys.argv = ["mitmdump", "-s", __file__, "--listen-host", args.host, "--listen-port", str(args.port)]
-    # 取消注释下面的代码，可以看到log信息
+
     mitmdump()

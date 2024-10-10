@@ -1,6 +1,7 @@
 # XIaoYuanKouSuan
 
-小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作，比机器视觉识别更快更准确！
+- 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作，比机器视觉识别更快更准确！
+- 方案二： 修改所有答案为“1”（推荐使用方案二）[方案二链接](Change_Answer/README.md)
 
 ![Language](https://img.shields.io/badge/language-python-blue?logo=python)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
@@ -12,11 +13,13 @@
 
 ## 目录
 
-- [演示视频](#演示视频)
-- [碎碎念 :thought_balloon:](#碎碎念-thought_balloon)
-- [环境配置 :hammer_and_wrench:](#环境配置-hammer_and_wrench)
-- [代码修改 :pencil2:](#代码修改-pencil2)
-- [使用 :hammer_and_wrench:](#使用-hammer_and_wrench)
+- [XIaoYuanKouSuan](#xiaoyuankousuan)
+  - [目录](#目录)
+  - [演示视频](#演示视频)
+  - [碎碎念 :thought\_balloon:](#碎碎念-thought_balloon)
+  - [环境配置 :hammer\_and\_wrench:](#环境配置-hammer_and_wrench)
+  - [代码修改 :pencil2:](#代码修改-pencil2)
+  - [使用 :hammer\_and\_wrench:](#使用-hammer_and_wrench)
 
 ## 演示视频
 

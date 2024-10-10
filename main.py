@@ -116,6 +116,18 @@ def check_adb_installed():
         print("ADB 未找到，请先安装 ADB 工具。")
         sys.exit(1)
 
+# ADB 连接设备
+def connect_adb_wireless(adb_ip):
+    try:
+        result = subprocess.run(["adb", "connect", adb_ip], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if "connected" not in result.stdout:
+            print(f"ADB 连接失败: {result.stderr}")
+            sys.exit(1)
+        print(f"已连接到 {adb_ip}")
+    except subprocess.CalledProcessError as e:
+        print(f"ADB 连接错误: {e}")
+        sys.exit(1)
+
 # 主程序
 if __name__ == "__main__":
     check_adb_installed()
@@ -124,7 +136,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Mitmproxy script")
     parser.add_argument("-P", "--port", type=int, default=8080, help="Port to listen on")
     parser.add_argument("-H", "--host", type=str, default="0.0.0.0", help="Host to listen on")
+    parser.add_argument("-WI", "--adb-ip", type=str, help="IP and port for ADB wireless connection (e.g., 192.168.0.101:5555)")
     args = parser.parse_args()
+
+    # 如果指定了 ADB IP，进行无线调试连接
+    if args.adb_ip:
+        connect_adb_wireless(args.adb_ip)
 
     # 运行mitmdump
     sys.argv = ["mitmdump", "-s", __file__, "--listen-host", args.host, "--listen-port", str(args.port)]

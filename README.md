@@ -2,13 +2,17 @@
 
 小猿口算
 
+## 演示视频
+
+https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00
+
 ## 碎碎念
 
-代码有点屎山哈哈哈哈，抛砖引玉, 有问题欢迎提issue
+代码有点屎山哈哈哈哈，抛砖引玉, 有问题欢迎提 issue
 
 ## 环境配置
 
-1. root的安卓设备(lsposed等)
+1. root 的安卓设备(lsposed 等)
 2. python3
 3. adb
 
@@ -41,7 +45,7 @@ def str_to_xy(str):
 
 ```python
 def answer_write(answer):
-    
+
     for i in range(len(answer)):
         number_command.swipe_screen(answer[i])
         # time.sleep(0.16)
@@ -58,21 +62,21 @@ def answer_write(answer):
 pip install -r requirements.txt
 ```
 
-2. 配置root设备
+2. 配置 root 设备
 
-采用trust me already禁用app ssl
+采用 trust me already 禁用 app ssl
 
-3. 配置adb
+3. 配置 adb
 
-- 打开开发者选项中的usb调试
-    
+- 打开开发者选项中的 usb 调试
+
 ```shell
 adb devices
 ```
 
 4. 配置安卓代理
 
-WIFI设置代理为电脑ip和端口(8080)
+WIFI 设置代理为电脑 ip 和端口(8080)
 
 5. 运行
 

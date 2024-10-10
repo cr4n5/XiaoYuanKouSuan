@@ -10,13 +10,11 @@
 
 ## 目录
 
-- [XIaoYuanKouSuan](#xiaoyuankousuan)
-  - [目录](#目录)
-  - [演示视频](#演示视频)
-  - [碎碎念 :thought\_balloon:](#碎碎念-thought_balloon)
-  - [环境配置 :hammer\_and\_wrench:](#环境配置-hammer_and_wrench)
-  - [代码修改 :pencil2:](#代码修改-pencil2)
-  - [使用 :hammer\_and\_wrench:](#使用-hammer_and_wrench)
+- [演示视频](#演示视频)
+- [碎碎念 :thought_balloon:](#碎碎念-thought_balloon)
+- [环境配置 :hammer_and_wrench:](#环境配置-hammer_and_wrench)
+- [代码修改 :pencil2:](#代码修改-pencil2)
+- [使用 :hammer_and_wrench:](#使用-hammer_and_wrench)
 
 ## 演示视频
 

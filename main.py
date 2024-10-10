@@ -11,8 +11,10 @@ import tkinter as tk
 from tkinter import messagebox
 import argparse
 
+
 def request(flow: http.HTTPFlow) -> None:
     pass
+
 
 def response(flow: http.HTTPFlow) -> None:
     print(f"Response: {flow.response.status_code} {flow.request.url}")
@@ -20,15 +22,20 @@ def response(flow: http.HTTPFlow) -> None:
         answer = json.loads(flow.response.text)
         print(json.dumps(answer, indent=4))
         select_answer(answer, "练习")
-    elif "https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match?" in flow.request.url:
+    elif (
+        "https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match?"
+        in flow.request.url
+    ):
         answer = json.loads(flow.response.text)
         print(json.dumps(answer, indent=4))
         select_answer(answer, "pk")
+
 
 def answer_write(answer):
     for i in range(len(answer)):
         number_command.swipe_screen(answer[i])
         time.sleep(0.3)
+
 
 def select_answer(answer, type):
     f = open("answer.txt", "w")
@@ -62,6 +69,7 @@ def select_answer(answer, type):
     f.close()
     threading.Thread(target=gui_answer, args=(select_answer,)).start()
 
+
 def gui_answer(answer):
     root = tk.Tk()
     root.title("继续执行")
@@ -72,16 +80,30 @@ def gui_answer(answer):
 
     button = tk.Button(root, text="点击继续", command=on_button_click)
     button.pack(pady=20)
-        # 设置定时器，5秒后自动点击按钮
+
+    # 设置定时器，5秒后自动点击按钮
     root.after(12500, on_button_click)
 
     root.mainloop()
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Mitmproxy script")
-    parser.add_argument("-P", "--port", type=int, default=8080, help="Port to listen on")
-    parser.add_argument("-H", "--host", type=str, default="0.0.0.0", help="Host to listen on")
+    parser.add_argument(
+        "-P", "--port", type=int, default=8080, help="Port to listen on"
+    )
+    parser.add_argument(
+        "-H", "--host", type=str, default="0.0.0.0", help="Host to listen on"
+    )
     args = parser.parse_args()
 
-    sys.argv = ["mitmdump", "-s", __file__, "--listen-host", args.host, "--listen-port", str(args.port)]
+    sys.argv = [
+        "mitmdump",
+        "-s",
+        __file__,
+        "--listen-host",
+        args.host,
+        "--listen-port",
+        str(args.port),
+    ]
     mitmdump()

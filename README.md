@@ -2,10 +2,11 @@
 
 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作，比机器视觉识别更快更准确！
 
-![Language](https://img.shields.io/badge/language-python-blue.svg)
+![Language](https://img.shields.io/badge/language-python-blue?logo=python)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
 ![Forks](https://img.shields.io/github/forks/cr4n5/XiaoYuanKouSuan.svg)
 ![Issues](https://img.shields.io/github/issues/cr4n5/XiaoYuanKouSuan.svg)
+![Platform](https://img.shields.io/badge/platform-Android-green?logo=android)
 
 ## 目录
 

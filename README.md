@@ -29,7 +29,7 @@ https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00
 ## 环境配置 :hammer_and_wrench:
 
 1. 已 root 的安卓设备(lsposed 等) :iphone:
-2. python3​ (version >= 3.10):snake:
+2. python3​ (version >= 3.10) :snake:
 3. adb :electric_plug:
 
 ## 代码修改 :pencil2:
@@ -151,7 +151,6 @@ def answer_write(answer):
 - 运行提示 `ADB 未找到，请先安装 ADB 工具`？
 
   请检查当前设备是否正确安装 adb 工具，需将 adb 添加至设备环境变量（亦可以修改代码手动指定 adb 路径）。
-  
 ## 贡献 :sparkles:
 
 本库仍在不断更新完善与丰富功能当中，欢迎您共同参与！

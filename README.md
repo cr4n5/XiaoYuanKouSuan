@@ -10,10 +10,10 @@
 ## 目录
 
 - [演示视频](#演示视频)
-- [碎碎念 :thought_balloon:](#碎碎念-%F0%9F%92%AD)
-- [环境配置 :hammer_and_wrench:](#环境配置-%F0%9F%9B%A0%EF%B8%8F)
-- [代码修改 :pencil2:](#代码修改-%E2%9C%8F%EF%B8%8F)
-- [使用 :hammer_and_wrench:](#使用-%F0%9F%9B%A0%EF%B8%8F)
+- [碎碎念 :thought_balloon:](#碎碎念-thought_balloon)
+- [环境配置 :hammer_and_wrench:](#环境配置-hammer_and_wrench)
+- [代码修改 :pencil2:](#代码修改-pencil2)
+- [使用 :hammer_and_wrench:](#使用-hammer_and_wrench)
 
 ## 演示视频
 

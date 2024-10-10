@@ -67,3 +67,6 @@
 [详见README.md](https://github.com/cr4n5/XiaoYuanKouSuan/blob/main/README.md)
 1. 安装依赖文件
 2. 运行main.py
+
+## 参考资料
+[雷电模拟器安装Magisk+Lsposed+TrustMeAlready-v1.11+fidder超详细教程步骤实现网络app抓包](https://blog.csdn.net/a376299406/article/details/135215301)

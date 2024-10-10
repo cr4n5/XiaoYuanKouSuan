@@ -33,9 +33,11 @@ def response(flow: http.HTTPFlow) -> None:
         # 将响应信息转换为json格式
         answer = json.loads(flow.response.text)
         if mock_ans:
-            # 修改答案为1
-            for question in answer["questions"]:
-                question["answers"] = ["1"] * len(question["answers"])
+            # 修改问题个数为1个，答案为1
+            answer["questionCnt"] = 1
+            answer["questions"] = answer["questions"][:1]
+            answer["questions"][0]["answers"] = ["1"]
+
             # mock请求内容
             flow.response.set_text(json.dumps(answer))
 
@@ -46,10 +48,16 @@ def response(flow: http.HTTPFlow) -> None:
         # 将响应信息转换为json格式
         answer = json.loads(flow.response.text)
         print("mock answer: " + str(mock_ans))
-        # 修改答案为1
+        # 修改问题个数为1个，答案为1
         if mock_ans:
-            for question in answer["examVO"]["questions"]:
-                question["answers"] = ["1"] * len(question["answers"])
+            # 感觉PK用太BUG了，没有下面的观赏性好
+            answer["questionCnt"] = 1
+            answer["examVO"]["questions"] = answer["examVO"]["questions"][:1]
+            answer["examVO"]["questions"][0]["answers"] = ["1"]
+
+            # for question in answer["examVO"]["questions"]:
+            #     question["answers"] = ["1"] * len(question["answers"])
+
             # mock请求内容
             flow.response.set_text(json.dumps(answer))
 
@@ -158,5 +166,5 @@ if __name__ == "__main__":
     print("mock answer: " + str(ctx.shared_state['mock_ans']))
 
     sys.argv = ["mitmdump", "-s", __file__, "--listen-host", args.host, "--listen-port", str(args.port)]
-    # 取消注释下面的代码，可以看到log信息
+
     mitmdump()

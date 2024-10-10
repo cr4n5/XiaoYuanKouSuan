@@ -8,6 +8,8 @@
 ![Issues](https://img.shields.io/github/issues/cr4n5/XiaoYuanKouSuan.svg)
 ![Platform](https://img.shields.io/badge/platform-Android-green?logo=android)
 
+- [安卓模拟器使用教程](README_EMULATOR.md)
+
 ## 目录
 
 - [演示视频](#演示视频)

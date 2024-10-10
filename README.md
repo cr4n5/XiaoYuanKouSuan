@@ -54,8 +54,17 @@ def str_to_xy(str):
         case "=":
             return [[[1284, 1122], [1700, 1122]],[[1280, 1300], [1700, 1300]]]
 ```
+> [!TIP]
+> 根据设备分辨率修改坐标（同元组内坐标连续滑动）
 
-根据设备分辨率修改坐标（同元组内坐标连续滑动）
+```bash
+# 查看当前分辨率
+adb shell wm size
+#还原默认分辨率
+adb shell wm size reset
+# 更改分辨率为 1800x2880
+adb shell wm size 1800x2880
+```
 
 ```python
 def answer_write(answer):

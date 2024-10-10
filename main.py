@@ -1,4 +1,4 @@
-from mitmproxy import http
+from mitmproxy import http, ctx
 import json
 from mitmproxy.tools.main import mitmdump
 import sys
@@ -22,35 +22,47 @@ def request(flow: http.HTTPFlow) -> None:
     pass
 
 def response(flow: http.HTTPFlow) -> None:
+    # 使用 ctx 来获取全局的 mock_ans
+    mock_ans = ctx.shared_state.get('mock_ans', False)
+
     # 处理响应
-    
+
     print(f"Response: {flow.response.status_code} {flow.request.url}")
     # 如果url中包含指定的关键字，则打印响应信息
     if "https://xyks.yuanfudao.com/leo-math/android/exams?" in flow.request.url:
         # 将响应信息转换为json格式
         answer = json.loads(flow.response.text)
+        if mock_ans:
+            # 修改答案为1
+            for question in answer["questions"]:
+                question["answers"] = ["1"] * len(question["answers"])
+            # mock请求内容
+            flow.response.set_text(json.dumps(answer))
+
         # 格式化输出
         print(json.dumps(answer, indent=4))
-        # 保存到文件
-        # with open("answer.json", "w") as f:
-        #     f.write(json.dumps(answer, indent=4))
         select_answer(answer,"练习")
     elif "https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match?" in flow.request.url:
         # 将响应信息转换为json格式
         answer = json.loads(flow.response.text)
+        print("mock answer: " + str(mock_ans))
+        # 修改答案为1
+        if mock_ans:
+            for question in answer["examVO"]["questions"]:
+                question["answers"] = ["1"] * len(question["answers"])
+            # mock请求内容
+            flow.response.set_text(json.dumps(answer))
+
         # 格式化输出
         print(json.dumps(answer, indent=4))
-        # 保存到文件
-        # with open("answer.json", "w") as f:
-        #     f.write(json.dumps(answer, indent=4))
         select_answer(answer,"pk")
 
 def answer_write(answer):
-    
+    mock_ans = ctx.shared_state.get('mock_ans', False)
     for i in range(len(answer)):
         number_command.swipe_screen(answer[i])
-        # time.sleep(0.16)
-        time.sleep(0.3)
+        if not mock_ans:
+            time.sleep(0.3)
 
 def select_answer(answer, type):
     # 关闭notepad
@@ -137,7 +149,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Mitmproxy script")
     parser.add_argument("-P", "--port", type=int, default=8080, help="Port to listen on")
     parser.add_argument("-H", "--host", type=str, default="0.0.0.0", help="Host to listen on")
+    parser.add_argument("-M", "--mock", type=bool, default=False, help="mock any answer to 1")
     args = parser.parse_args()
+
+    # 将 mock_ans 保存在 ctx 中的共享状态
+    ctx.shared_state = {}
+    ctx.shared_state['mock_ans'] = args.mock
+    print("mock answer: " + str(ctx.shared_state['mock_ans']))
 
     sys.argv = ["mitmdump", "-s", __file__, "--listen-host", args.host, "--listen-port", str(args.port)]
     # 取消注释下面的代码，可以看到log信息

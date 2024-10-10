@@ -3,7 +3,7 @@
 本项目已突破0.01s
 
 - 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作
-- 方案二： 修改所有答案为“1”（强烈推荐使用方案二，可0.01s）[方案二链接](Change_Answer/README.md)
+- 方案二： 修改答案为“1”（强烈推荐使用方案二，可0.01s）[方案二链接](Change_Answer/README.md)
 
 ![Language](https://img.shields.io/badge/language-python-blue?logo=python)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)

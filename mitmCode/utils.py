@@ -54,8 +54,8 @@ def check_continue_ui():
             screen_image_np = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
             screen_image_gray = cv2.cvtColor(screen_image_np, cv2.COLOR_BGR2GRAY)
             if get_config_auto().get():
-                matched_location = match_template(screen_image_gray, template_image)
-                matched_location1 = match_template(screen_image_gray, template_image2)
+                matched_location = match_template(screen_image_gray, template_kaixin)
+                matched_location1 = match_template(screen_image_gray, template_tryagain)
                 jixu_location = match_template(screen_image_gray, template_jixu)
                 again_location = match_template(screen_image_gray, template_again)
                 if matched_location:

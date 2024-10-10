@@ -1,6 +1,6 @@
 # XIaoYuanKouSuan
 
-小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作，比机器识别更快更准确！
+小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作，比机器视觉识别更快更准确！
 
 ![Language](https://img.shields.io/badge/language-python-blue.svg)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)

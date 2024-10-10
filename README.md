@@ -59,7 +59,7 @@ def answer_write(answer):
 
 根据所需更改每个题目间隔时间
 
-## 使用:hammer_and_wrench:
+## 使用 :hammer_and_wrench:
 
 1. 安装依赖
 

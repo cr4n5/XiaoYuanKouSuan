@@ -2,6 +2,11 @@
 
 小猿口算
 
+![Language](https://img.shields.io/badge/language-python-blue.svg)
+![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
+![Forks](https://img.shields.io/github/forks/cr4n5/XiaoYuanKouSuan.svg)
+![Issues](https://img.shields.io/github/issues/cr4n5/XiaoYuanKouSuan.svg)
+
 ## 演示视频
 
 https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00

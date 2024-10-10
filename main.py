@@ -72,6 +72,9 @@ def gui_answer(answer):
 
     button = tk.Button(root, text="点击继续", command=on_button_click)
     button.pack(pady=20)
+        # 设置定时器，5秒后自动点击按钮
+    root.after(12500, on_button_click)
+
     root.mainloop()
 
 if __name__ == "__main__":

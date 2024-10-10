@@ -126,3 +126,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     sys.argv = ["mitmdump", "-s", __file__, "--listen-host", args.host, "--listen-port", str(args.port)]
+    mitmdump()

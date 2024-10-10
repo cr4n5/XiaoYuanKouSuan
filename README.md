@@ -6,17 +6,17 @@
 
 https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00
 
-## 碎碎念
+## 碎碎念 :thought_balloon:
 
-代码有点屎山哈哈哈哈，抛砖引玉, 有问题欢迎提 issue
+代码有点屎山哈哈哈哈，抛砖引玉, 有问题欢迎提 issue :bug:
 
-## 环境配置
+## 环境配置 :hammer_and_wrench:
 
-1. root 的安卓设备(lsposed 等)
-2. python3
-3. adb
+1. root 的安卓设备(lsposed 等) :iphone:
+2. python3 :snake:
+3. adb :electric_plug:
 
-## 代码修改
+## 代码修改 :pencil2:
 
 ```python
 def str_to_xy(str):
@@ -54,7 +54,7 @@ def answer_write(answer):
 
 根据所需更改每个题目间隔时间
 
-## 使用
+## 使用:hammer_and_wrench:
 
 1. 安装依赖
 

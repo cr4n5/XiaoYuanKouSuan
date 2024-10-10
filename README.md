@@ -10,11 +10,13 @@
 
 ## 目录
 
-- [演示视频](#演示视频)
-- [碎碎念 :thought_balloon:](#碎碎念-thought_balloon)
-- [环境配置 :hammer_and_wrench:](#环境配置-hammer_and_wrench)
-- [代码修改 :pencil2:](#代码修改-pencil2)
-- [使用 :hammer_and_wrench:](#使用-hammer_and_wrench)
+- [XIaoYuanKouSuan](#xiaoyuankousuan)
+  - [目录](#目录)
+  - [演示视频](#演示视频)
+  - [碎碎念 :thought\_balloon:](#碎碎念-thought_balloon)
+  - [环境配置 :hammer\_and\_wrench:](#环境配置-hammer_and_wrench)
+  - [代码修改 :pencil2:](#代码修改-pencil2)
+  - [使用 :hammer\_and\_wrench:](#使用-hammer_and_wrench)
 
 ## 演示视频
 
@@ -105,11 +107,11 @@ WIFI 设置代理为电脑 ip 和端口(8080)
 5. 运行
 
 ```shell
-python main.py -H <host> -P <port>
+python main.py -H <host> -P <port> -M <开启mock答案填true>
 ```
 
 例如：
 
 ```shell
-python main.py -H 0.0.0.0 -P 8080
+python main.py -H 0.0.0.0 -P 8080 -M false
 ```

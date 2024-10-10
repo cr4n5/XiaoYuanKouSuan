@@ -8,6 +8,9 @@ import tkinter as tk
 from mitmproxy import http
 from mitmproxy.tools.main import mitmdump
 import number_command
+import os
+
+CONFIG_FILE = "user_config.json"
 
 # 请求处理函数
 def request(flow: http.HTTPFlow) -> None:
@@ -59,6 +62,18 @@ def answer_write(answer):
         number_command.swipe_screen(ans)
         time.sleep(0.3)  # 可根据需求调整
 
+# 读取用户配置
+def load_user_config():
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, 'r') as file:
+            return json.load(file).get("auto_continue", False)
+    return False
+
+# 保存用户配置
+def save_user_config(auto_continue):
+    with open(CONFIG_FILE, 'w') as file:
+        json.dump({"auto_continue": auto_continue}, file)
+
 # GUI界面控制
 def gui_answer(answer):
     root = tk.Tk()
@@ -67,15 +82,27 @@ def gui_answer(answer):
     label = tk.Label(root, text="请待可作答时点击继续", font=("Helvetica", 14))
     label.pack(pady=10, anchor="center")
 
+    description_label = tk.Label(root, text="自动继续状态变更，需待下一轮", font=("Arial", 10))
+    description_label.pack(pady=5)
+    label.pack(pady=10, anchor="center")
+
+    auto_continue = tk.BooleanVar(value=load_user_config())
+
+    auto_checkbox = tk.Checkbutton(root, text="自动继续", variable=auto_continue)
+    auto_checkbox.pack(pady=10)
+
     def on_button_click():
+        save_user_config(auto_continue.get())  # 保存用户选择
         root.destroy()  # 关闭窗口
         answer_write(answer)  # 继续执行代码
 
     button = tk.Button(root, text="点击继续", command=on_button_click)
     button.pack(pady=20)
 
-    # 12.5秒后自动点击按钮
-    root.after(12500, on_button_click)
+    # 如果用户选择了自动继续，12.5秒后自动点击按钮
+    if auto_continue.get():
+        root.after(12500, on_button_click)
+
     root.mainloop()
 
 # 检查 adb 是否安装

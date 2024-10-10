@@ -105,6 +105,8 @@ def gui_answer(answer):
     button = tk.Button(root, text="点击继续", command=on_button_click)
     button.pack(pady=20)
     
+    # 设置定时器，12.5秒后自动点击按钮
+    root.after(12500, on_button_click)
     # 运行 GUI 界面
     root.mainloop()
 
@@ -124,4 +126,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     sys.argv = ["mitmdump", "-s", __file__, "--listen-host", args.host, "--listen-port", str(args.port)]
-    mitmdump()

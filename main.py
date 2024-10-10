@@ -11,6 +11,11 @@ import tkinter as tk
 from tkinter import messagebox
 import argparse
 
+# CONFIG #
+tick_time = 0.3    # 每题间隔时间
+start_time = 12.5    # 开始做题前摇时间
+
+
 def request(flow: http.HTTPFlow) -> None:
     # 处理请求
     # print(f"Request: {flow.request.method} {flow.request.url}")
@@ -86,27 +91,36 @@ def select_answer(answer, type):
     # 关闭文件
     f.close()
 
-    threading.Thread(target=gui_answer, args=(select_answer,)).start()
+    q_num = len(select_answer)
+    threading.Thread(target=gui_answer, args=(select_answer,q_num,)).start()
 
     # 用记事本打开文件
     # os.system("notepad answer.txt")
     # threading.Thread(target=os.system, args=("notepad answer.txt",)).start()
     
-def gui_answer(answer):
+def gui_answer(answer,q_num):
     # 创建一个GUI
     root = tk.Tk()
     root.title("继续执行")
     
     def on_button_click():
-        root.destroy()  # 关闭窗口
         answer_write(answer)  # 继续执行代码
+
+    def on_button2_click():
+        number_command.next_round()  # 继续执行代码
+        root.destroy()
     
     # 创建一个按钮
     button = tk.Button(root, text="点击继续", command=on_button_click)
+    button2 = tk.Button(root, text="下一把", command=on_button2_click)
     button.pack(pady=20)
+    button2.pack(pady=20)
     
-    # 设置定时器，12.5秒后自动点击按钮
-    root.after(12500, on_button_click)
+    # 设置定时器，若干秒后自动点击按钮
+    time = int(start_time * 1000)
+    root.after(time, on_button_click)
+    time2 = int((start_time + tick_time * 1.15 * q_num + 5) * 1000)
+    root.after(time2, on_button2_click)
     # 运行 GUI 界面
     root.mainloop()
 

@@ -1,9 +1,10 @@
 # XIaoYuanKouSuan
 
-本项目已突破 0.01s
+本项目已突破 0.00s
 
-- 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作
-- 方案二： 修改答案为“1”（强烈推荐使用方案二，可 0.01s）[方案二链接](Change_Answer/README.md)
+- 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作 （已失效）
+- 方案二： 修改答案为“1”（强烈推荐使用方案二，可 0.00s，仅限练习场）[方案二链接](Change_Answer/README.md) [0.00s 教程思路 感谢！](https://github.com/xiaou61/XiaoYuanKousuan)
+- 方案三： 修改pk场 js文件（仅限pk场）在此特别感谢 [Ulua3809](https://github.com/ulua3809)!!!
 
 ![Language](https://img.shields.io/badge/language-python-blue?logo=python)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
@@ -17,7 +18,7 @@
 
 ![0.01s](doc/img/8eb980c85f8f8798f3777fc47ffedd4.jpg)
 ![0.00s](doc/img/5c3b67fb34956a41a2322553f8f4069.jpg)
-在“READY GO”加载出来之前，可在画板滑动，即可达到 0.00s，但是无法上传结果
+在“READY GO”加载出来之前，可在画板滑动，即可达到 0.00s [见此](https://github.com/xiaou61/XiaoYuanKousuan)
 
 ## 目录
 
@@ -25,10 +26,12 @@
   - [战绩可查](#战绩可查)
   - [目录](#目录)
   - [演示视频](#演示视频)
-  - [碎碎念 :thought_balloon:](#碎碎念-thought_balloon)
-  - [环境配置 :hammer_and_wrench:](#环境配置-hammer_and_wrench)
-  - [代码修改 :pencil2:](#代码修改-pencil2)
-  - [使用 :hammer_and_wrench:](#使用-hammer_and_wrench)
+  - [碎碎念 :thought\_balloon:](#碎碎念-thought_balloon)
+  - [环境配置 :hammer\_and\_wrench:](#环境配置-hammer_and_wrench)
+  - [代码修改`对于方案三暂时不用修改` :pencil2:](#代码修改对于方案三暂时不用修改-pencil2)
+  - [使用 :hammer\_and\_wrench:](#使用-hammer_and_wrench)
+  - [贡献者 :heart:](#贡献者-heart)
+  - [Star History :star:](#star-history-star)
 
 ## 演示视频
 
@@ -44,7 +47,7 @@ https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00
 2. python3 :snake:
 3. adb :electric_plug:
 
-## 代码修改 :pencil2:
+## 代码修改`对于方案三暂时不用修改` :pencil2:
 
 ```python
 def str_to_xy(str):
@@ -127,6 +130,10 @@ python main.py -H <host> -P <port>
 ```shell
 python main.py -H 0.0.0.0 -P 8080
 ```
+
+6. （方案三）进入设置，清除小猿口算缓存
+   
+7. （方案三）pk场中任意答案都会判定正确，使用连点器即可 ps：有人提的pr把 adb shell 命令方式改了，有点影响速度，后续会修改，故此次更新不包含模拟点击
 
 ## 贡献者 :heart:
 

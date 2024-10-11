@@ -10,7 +10,7 @@ import time
 import tkinter as tk
 from tkinter import messagebox
 import argparse
-
+import getExerciseJs
 # CONFIG #
 tick_time = 0.3    # 每题间隔时间
 start_time = 12.5    # 开始做题前摇时间
@@ -50,13 +50,30 @@ def response(flow: http.HTTPFlow) -> None:
     '''
 
     if "https://leo.fbcontent.cn/bh5/leo-web-oral-pk/exercise_" in flow.request.url:
-        # 读取修改后js
-        with open("exercise.js", "r", encoding="utf-8") as f:
-            text = f.read()
+        # 初始化 text 变量
+        text = None
+    
+    # 查询本地是否有 exercise.js
+        try:
+            with open("exercise.js", "r", encoding="utf-8") as f:
+                text = f.read()
+        except FileNotFoundError:
+            # 如果没有则下载
+            print("未找到 exercise.js，正在下载")
+            with open("original.js", "w", encoding="utf-8") as f:
+                f.write(flow.response.text)
+            getExerciseJs.replace_and_change_js("original.js", "exercise.js")
         
-        flow.response.text = text
-       
-        print("修改成功")
+            # 重新读取生成的 exercise.js
+            with open("exercise.js", "r", encoding="utf-8") as f:
+                text = f.read()
+    
+        # 确保 text 变量有值
+        if text is not None:
+            flow.response.text = text
+            print("修改成功")
+        else:
+            print("未能修改响应文本")
 
     
 

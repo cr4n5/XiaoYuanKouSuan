@@ -134,6 +134,9 @@ python main.py -H 0.0.0.0 -P 8080
 
 ![GitHub 贡献者](https://img.shields.io/github/contributors/cr4n5/XiaoYuanKouSuan)
 
+<!-- CONTRIBUTORS-START -->
+<!-- CONTRIBUTORS-END -->
+
 ## Star History :star:
 
 [![Star History Chart](https://api.star-history.com/svg?repos=cr4n5/XiaoYuanKouSuan&type=Date)](https://star-history.com/#cr4n5/XiaoYuanKouSuan&Date)

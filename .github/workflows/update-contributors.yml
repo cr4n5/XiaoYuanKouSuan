@@ -19,7 +19,7 @@ jobs:
 
       - name: Remove old contributors
         run: |
-          sed -i '/<!-- CONTRIBUTORS-START -->/,/<!-- CONTRIBUTORS-END -->/d' README.md
+          awk '/<!-- CONTRIBUTORS-START -->/{print;flag=1;next}/<!-- CONTRIBUTORS-END -->/{flag=0}flag{next}1' README.md > README.tmp && mv README.tmp README.md
 
       - name: Add new contributors
         run: |

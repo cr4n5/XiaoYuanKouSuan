@@ -37,9 +37,10 @@ def get_device_resolution():
         raise Exception("无法获取设备分辨率")
 
 def run_adb_command(commands):
-    # 批量执行 ADB 命令
+    # 批量执行 ADB 命令，以 root 权限运行
     for command in commands:
-        result = subprocess.run(["adb", "shell", command], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        full_command = f"su -c \"{command}\""
+        result = subprocess.run(["adb", "shell", full_command], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         if result.returncode != 0:
             print(f"命令执行失败: {result.stderr}")
 
@@ -78,13 +79,23 @@ def click_screen(xy):
     run_adb_command(command)
 
 def next_round():
-    click_screen( scale_coordinates_for_tap(NEXT_BUTTON_COORDINATES["next_1"], scale_x, scale_y) )
+    click_screen(scale_coordinates_for_tap(NEXT_BUTTON_COORDINATES["next_1"], scale_x, scale_y))
     time.sleep(0.5)
-    click_screen( scale_coordinates_for_tap(NEXT_BUTTON_COORDINATES["next_2"], scale_x, scale_y) )
+    click_screen(scale_coordinates_for_tap(NEXT_BUTTON_COORDINATES["next_2"], scale_x, scale_y))
     time.sleep(0.5)
-    click_screen( scale_coordinates_for_tap(NEXT_BUTTON_COORDINATES["next_3"], scale_x, scale_y) )
+    click_screen(scale_coordinates_for_tap(NEXT_BUTTON_COORDINATES["next_3"], scale_x, scale_y))
+
+def test_root():
+    test_command = "id"
+    full_command = f"su -c \"{test_command}\""
+    result = subprocess.run(["adb", "shell", full_command], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    if result.returncode == 0:
+        print(f"Root 权限成功: {result.stdout}")
+    else:
+        print(f"Root 权限失败: {result.stderr}")
 
 if __name__ == "__main__":
+    test_root()
     # 执行滑动操作
     swipe_screen("<")
     swipe_screen("=")

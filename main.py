@@ -23,8 +23,10 @@ def request(flow: http.HTTPFlow) -> None:
 
 def response(flow: http.HTTPFlow) -> None:
     # 处理响应
-    
+
     print(f"Response: {flow.response.status_code} {flow.request.url}")
+
+    ''' 原方案
     # 如果url中包含指定的关键字，则打印响应信息
     if "https://xyks.yuanfudao.com/leo-math/android/exams?" in flow.request.url:
         # 将响应信息转换为json格式
@@ -44,6 +46,19 @@ def response(flow: http.HTTPFlow) -> None:
         # with open("answer.json", "w") as f:
         #     f.write(json.dumps(answer, indent=4))
         select_answer(answer,"pk")
+    
+    '''
+
+    if "https://leo.fbcontent.cn/bh5/leo-web-oral-pk/exercise_" in flow.request.url:
+        # 读取修改后js
+        with open("exercise.js", "r", encoding="utf-8") as f:
+            text = f.read()
+        
+        flow.response.text = text
+       
+        print("修改成功")
+
+    
 
 def answer_write(answer):
     

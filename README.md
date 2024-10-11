@@ -1,9 +1,11 @@
 # XIaoYuanKouSuan
 
-本项目已突破 0.01s
+本项目已突破 0.00s
+
+pk场数据已被加密，练习场正常
 
 - 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作
-- 方案二： 修改答案为“1”（强烈推荐使用方案二，可 0.01s）[方案二链接](Change_Answer/README.md)
+- 方案二： 修改答案为“1”（强烈推荐使用方案二，可 0.00s）[方案二链接](Change_Answer/README.md) [0.00s 教程思路 感谢！](https://github.com/xiaou61/XiaoYuanKousuan)
 
 ![Language](https://img.shields.io/badge/language-python-blue?logo=python)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
@@ -17,7 +19,7 @@
 
 ![0.01s](doc/img/8eb980c85f8f8798f3777fc47ffedd4.jpg)
 ![0.00s](doc/img/5c3b67fb34956a41a2322553f8f4069.jpg)
-在“READY GO”加载出来之前，可在画板滑动，即可达到 0.00s，但是无法上传结果（ 0.01s 可正常上传）
+在“READY GO”加载出来之前，可在画板滑动，即可达到 0.00s [见此](https://github.com/xiaou61/XiaoYuanKousuan)
 
 ## 目录
 

@@ -24,11 +24,13 @@
 
 https://github.com/cr4n5/XiaoYuanKouSuan/issues/31#issue-2579180244
 
+- 视频教程中有个bug，在重写url时，不需要更改url，不要添加*  ！！！
+
 - pk url头
-https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match?
+https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match
 
 - 练习场 url头
-https://xyks.yuanfudao.com/leo-math/android/exams?
+https://xyks.yuanfudao.com/leo-math/android/exams
 
 以下场景二选一
 

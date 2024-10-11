@@ -19,9 +19,7 @@ jobs:
 
       - name: Update README
         run: |
-          awk 'BEGIN {print "<!-- CONTRIBUTORS-START -->"} {print} END {print "<!-- CONTRIBUTORS-END -->"}' CONTRIBUTORS.md > temp.md
-          awk 'NR==FNR{a[NR]=$0; next} /<!-- CONTRIBUTORS-START -->/{print; for(i=1;i<=NR;i++) print a[i]; next}1' temp.md README.md > README_new.md
-          mv README_new.md README.md
+          sed -i '/<!-- CONTRIBUTORS-START -->/,/<!-- CONTRIBUTORS-END -->/c\<!-- CONTRIBUTORS-START -->\n'$(cat CONTRIBUTORS.md)'\n<!-- CONTRIBUTORS-END -->' README.md
 
       - name: Commit changes
         run: |

@@ -4,7 +4,7 @@
 
 - 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作 （已失效）
 - 方案二： 修改答案为“1”（强烈推荐使用方案二，可 0.00s，仅限练习场）[方案二链接](Change_Answer/README.md) [0.00s 教程思路 感谢！](https://github.com/xiaou61/XiaoYuanKousuan)
-- 方案三： 修改pk场 js文件（仅限pk场）在此特别感谢 [Ulua3809](https://github.com/ulua3809)!!!
+- 方案三： 修改 pk 场 js 文件（仅限 pk 场）在此特别感谢 [Ulua3809](https://github.com/ulua3809)!!!
 
 ![Language](https://img.shields.io/badge/language-python-blue?logo=python)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
@@ -26,10 +26,10 @@
   - [战绩可查](#战绩可查)
   - [目录](#目录)
   - [演示视频](#演示视频)
-  - [碎碎念 :thought\_balloon:](#碎碎念-thought_balloon)
-  - [环境配置 :hammer\_and\_wrench:](#环境配置-hammer_and_wrench)
+  - [碎碎念 :thought_balloon:](#碎碎念-thought_balloon)
+  - [环境配置 :hammer_and_wrench:](#环境配置-hammer_and_wrench)
   - [代码修改`对于方案三暂时不用修改` :pencil2:](#代码修改对于方案三暂时不用修改-pencil2)
-  - [使用 :hammer\_and\_wrench:](#使用-hammer_and_wrench)
+  - [使用 :hammer_and_wrench:](#使用-hammer_and_wrench)
   - [贡献者 :heart:](#贡献者-heart)
   - [Star History :star:](#star-history-star)
 
@@ -132,8 +132,8 @@ python main.py -H 0.0.0.0 -P 8080
 ```
 
 6. （方案三）进入设置，清除小猿口算缓存
-   
-7. （方案三）pk场中任意答案都会判定正确，使用连点器即可 ps：有人提的pr把 adb shell 命令方式改了，有点影响速度，后续会修改，故此次更新不包含模拟点击
+   ![alt text](doc/img/773b1be382d61dfe65f13b421a8e6f3b.png)
+7. （方案三）pk 场中任意答案都会判定正确，使用连点器即可 ps：有人提的 pr 把 adb shell 命令方式改了，有点影响速度，后续会修改，故此次更新不包含模拟点击
 
 ## 贡献者 :heart:
 
@@ -142,6 +142,7 @@ python main.py -H 0.0.0.0 -P 8080
 ![GitHub 贡献者](https://img.shields.io/github/contributors/cr4n5/XiaoYuanKouSuan)
 
 <!-- CONTRIBUTORS-START -->
+
 <a href="https://github.com/sd0ric4"><img src="https://avatars.githubusercontent.com/u/63280168?v=4&s=100" width="50" height="50" alt="sd0ric4" /></a>
 <a href="https://github.com/cr4n5"><img src="https://avatars.githubusercontent.com/u/136036346?v=4&s=100" width="50" height="50" alt="cr4n5" /></a>
 <a href="https://github.com/jhy354"><img src="https://avatars.githubusercontent.com/u/33386148?v=4&s=100" width="50" height="50" alt="jhy354" /></a>
@@ -149,6 +150,7 @@ python main.py -H 0.0.0.0 -P 8080
 <a href="https://github.com/MultiWolf"><img src="https://avatars.githubusercontent.com/u/104704213?v=4&s=100" width="50" height="50" alt="MultiWolf" /></a>
 <a href="https://github.com/ulua3809"><img src="https://avatars.githubusercontent.com/u/63995396?v=4&s=100" width="50" height="50" alt="ulua3809" /></a>
 <a href="https://github.com/xiaou61"><img src="https://avatars.githubusercontent.com/u/113765024?v=4&s=100" width="50" height="50" alt="xiaou61" /></a>
+
 <!-- CONTRIBUTORS-END -->
 
 ## Star History :star:

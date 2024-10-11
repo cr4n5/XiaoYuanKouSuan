@@ -1,0 +1,30 @@
+name: Update Contributors
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 每天运行一次
+  workflow_dispatch:
+
+jobs:
+  update-contributors:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Generate contributors list
+        run: |
+          curl -s https://api.github.com/repos/cr4n5/XiaoYuanKouSuan/contributors | jq -r '.[] | "<a href=\"\(.html_url)\"><img src=\"\(.avatar_url)&s=100\" width=\"50\" height=\"50\" alt=\"\(.login)\" /></a>"' > CONTRIBUTORS.md
+
+      - name: Update README
+        run: |
+          sed -i '/<!-- CONTRIBUTORS-START -->/,/<!-- CONTRIBUTORS-END -->/c\<!-- CONTRIBUTORS-START -->\n'$(cat CONTRIBUTORS.md)'\n<!-- CONTRIBUTORS-END -->' README.md
+
+      - name: Commit changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add README.md
+          git commit -m 'Update contributors list'
+          git push

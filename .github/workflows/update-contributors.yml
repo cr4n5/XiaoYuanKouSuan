@@ -17,9 +17,13 @@ jobs:
         run: |
           curl -s https://api.github.com/repos/cr4n5/XiaoYuanKouSuan/contributors | jq -r '.[] | "<a href=\"\(.html_url)\"><img src=\"\(.avatar_url)&s=100\" width=\"50\" height=\"50\" alt=\"\(.login)\" /></a>"' > CONTRIBUTORS.md
 
-      - name: Update README
+      - name: Remove old contributors
         run: |
-          sed -i '/<!-- CONTRIBUTORS-START -->/,/<!-- CONTRIBUTORS-END -->/c\<!-- CONTRIBUTORS-START -->\n'$(cat CONTRIBUTORS.md)'\n<!-- CONTRIBUTORS-END -->' README.md
+          sed -i '/<!-- CONTRIBUTORS-START -->/,/<!-- CONTRIBUTORS-END -->/d' README.md
+
+      - name: Add new contributors
+        run: |
+          sed -i '/<!-- CONTRIBUTORS-START -->/r CONTRIBUTORS.md' README.md
 
       - name: Commit changes
         run: |

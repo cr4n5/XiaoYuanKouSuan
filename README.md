@@ -1,6 +1,12 @@
 # XiaoYuanKouSuan
 
-`本项目仅供学习和研究使用请于24小时内删除。使用本项目所产生的任何后果由使用者自行承担。在使用本项目之前，请确保您已充分了解相关法律法规，并确保您的行为符合所在国家或地区的法律要求。未经授权的情况下，请勿将本项目用于商业用途或其他非法用途。`
+![Language](https://img.shields.io/badge/language-python-blue?logo=python)
+![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
+![Forks](https://img.shields.io/github/forks/cr4n5/XiaoYuanKouSuan.svg)
+![Issues](https://img.shields.io/github/issues/cr4n5/XiaoYuanKouSuan.svg)
+![Platform](https://img.shields.io/badge/platform-Android-green?logo=android)
+
+>本项目仅供学习和研究使用请于24小时内删除。使用本项目所产生的任何后果由使用者自行承担。在使用本项目之前，请确保您已充分了解相关法律法规，并确保您的行为符合所在国家或地区的法律要求。未经授权的情况下，请勿将本项目用于商业用途或其他非法用途。转载使用请标明出处。
 
 本项目已突破 0.00s
 
@@ -9,11 +15,6 @@
 - 方案三： 修改 pk 场 js 文件（仅限 pk 场）在此特别感谢 [Ulua3809](https://github.com/ulua3809)! [方案三链接](Re_js/README.md)
 - 其他思路：[Frida Hook](https://github.com/cr4n5/XiaoYuanKouSuan/issues/92)、[解密(1)](https://github.com/cr4n5/XiaoYuanKouSuan/issues/79)、[解密(2)](https://github.com/xmexg/xyks/issues/9)[解密(2)实现](https://github.com/xmexg/xyks/tree/master/frida/matchV2)
 
-![Language](https://img.shields.io/badge/language-python-blue?logo=python)
-![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
-![Forks](https://img.shields.io/github/forks/cr4n5/XiaoYuanKouSuan.svg)
-![Issues](https://img.shields.io/github/issues/cr4n5/XiaoYuanKouSuan.svg)
-![Platform](https://img.shields.io/badge/platform-Android-green?logo=android)
 
 - [安卓模拟器使用教程](README_EMULATOR.md)
 

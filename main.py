@@ -7,24 +7,26 @@ import tkinter as tk
 from tkinter import messagebox
 import argparse
 import sys
+import time
 
 # CONFIG
-dialog_shown = False
-answerCount = 30
+is_dialog_shown = False
+ANSWER_COUNT = 30
+WAITING_TIME = 12.5
 
 def request(flow: http.HTTPFlow) -> None:
     pass
 
 def response(flow: http.HTTPFlow) -> None:
-    global dialog_shown
+    global is_dialog_shown
     url = flow.request.url
     print(f"Response: {flow.response.status_code} {url}")
 
     if is_target_url(url):
         handle_target_response(flow, url)
     elif "https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match/v2?" in url:
-        if not dialog_shown:
-            dialog_shown = True
+        if not is_dialog_shown:
+            is_dialog_shown = True
             threading.Thread(target=gui_answer).start()
 
 def is_target_url(url):
@@ -58,7 +60,7 @@ def show_message_box(title, message):
     root.destroy()
 
 def answer_write():
-    for _ in range(answerCount):
+    for _ in range(ANSWER_COUNT):
         number_command.tap_screen(".")
 
 def gui_answer():
@@ -66,7 +68,17 @@ def gui_answer():
     root.title("继续执行")
     button = tk.Button(root, text="点击继续", command=answer_write)
     button.pack(pady=20)
+
+    # 设置定时器自动点击
+    threading.Timer(WAITING_TIME, auto_click_and_close, args=(root,)).start()
+
     root.mainloop()
+
+def auto_click_and_close(root):
+    answer_write()
+    global is_dialog_shown
+    is_dialog_shown = False
+    root.destroy()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Mitmproxy script")

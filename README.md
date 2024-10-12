@@ -88,8 +88,8 @@ adb shell wm size 1800x2880
 
 ```python
 # config.py
-ANSWER_COUNT = 30 // 题目数量
-WAITING_TIME = 12.5 // 等待时间
+ANSWER_COUNT = 30 # 题目数量
+WAITING_TIME = 12.5 # 等待时间
 ```
 
 ## 使用 :smile:

@@ -150,6 +150,7 @@ python main.py -H 0.0.0.0 -P 8080
 <a href="https://github.com/MultiWolf"><img src="https://avatars.githubusercontent.com/u/104704213?v=4&s=100" width="50" height="50" alt="MultiWolf" /></a>
 <a href="https://github.com/ulua3809"><img src="https://avatars.githubusercontent.com/u/63995396?v=4&s=100" width="50" height="50" alt="ulua3809" /></a>
 <a href="https://github.com/xiaou61"><img src="https://avatars.githubusercontent.com/u/113765024?v=4&s=100" width="50" height="50" alt="xiaou61" /></a>
+<a href="https://github.com/GSQZ"><img src="https://avatars.githubusercontent.com/u/83207347?v=4&s=100" width="50" height="50" alt="GSQZ" /></a>
 
 <!-- CONTRIBUTORS-END -->
 

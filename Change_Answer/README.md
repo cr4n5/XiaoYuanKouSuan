@@ -1,4 +1,6 @@
-# XIaoYuanKouSuan
+# XiaoYuanKouSuan
+
+方案二
 
 ## 所需 :hammer_and_wrench:
 
@@ -7,6 +9,8 @@
 3. adb(非必须) :electric_plug:
 
 ## 使用 :hammer_and_wrench:
+
+- [安卓模拟器使用教程](README_EMULATOR.md)
 
 [软件及模块](https://xuanrandev.lanzouw.com/b00qc8yij) 密码：5qiw
 
@@ -27,7 +31,7 @@ https://github.com/cr4n5/XiaoYuanKouSuan/issues/31#issue-2579180244
 - 视频教程中有个bug，在重写url时，不需要更改url，不要添加*  ！！！
 
 - pk url头
-https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match
+~~https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match~~
 
 - 练习场 url头
 https://xyks.yuanfudao.com/leo-math/android/exams

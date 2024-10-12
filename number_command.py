@@ -3,6 +3,9 @@ from functools import lru_cache
 
 # 以作者的测试平板分辨率为基准（1800x2880）
 # 已在小米 13 测试（1080x2400）
+BASE_RESOLUTION = (1800, 2880)
+
+# 坐标点信息
 BASE_COORDINATES = {
     "1": [[1480, 1050], [1440, 1470]],
     "2": [[1255, 1100], [1700, 1100], [1255, 1470], [1700, 1470]],
@@ -12,11 +15,13 @@ BASE_COORDINATES = {
     "6": [[1533, 1027], [1265, 1428], [1663, 1439]],
     ">": [[[1350, 1080], [1545, 1172], [1295, 1297]]],
     "<": [[[1578, 1058], [1308, 1231], [1560, 1292]]],
-    "=": [[[1284, 1122], [1700, 1122], [1280, 1300], [1700, 1300]]]
+    "=": [[[1284, 1122], [1700, 1122], [1280, 1300], [1700, 1300]]],
+    ".": [1350, 1080]  # 单独的点
 }
 
 @lru_cache()
 def get_device_resolution():
+    # 获取设备的物理分辨率，并缓存
     result = subprocess.run(["adb", "shell", "wm", "size"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output = result.stdout
     if "Physical size" in output:
@@ -26,43 +31,53 @@ def get_device_resolution():
     else:
         raise Exception("无法获取设备分辨率")
 
-def run_adb_command(command):
-    # 使用 Popen 打开一个持久的 adb shell 会话并发送所有命令
+def run_adb_command(commands):
+    # 执行 ADB 命令，减少 subprocess 调用次数
     try:
-        with subprocess.Popen(["adb", "shell"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) as process:
-            stdout, stderr = process.communicate(command)
-            if stderr:
-                print(f"ADB 错误: {stderr}")
-            return stdout
+        command_str = "\n".join(commands) + "\n"
+        result = subprocess.run(["adb", "shell"], input=command_str, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if result.stderr:
+            print(f"ADB 错误: {result.stderr}")
+        return result.stdout
     except Exception as e:
         print(f"ADB 命令执行失败: {e}")
         return None
 
-def swipe_screen(command_str, base_resolution=(1800, 2880)):
+def tap_screen(command_str):
     current_resolution = get_device_resolution()
-    scale_factor_x = current_resolution[0] / base_resolution[0]
-    scale_factor_y = current_resolution[1] / base_resolution[1]
+    scale_x = current_resolution[0] / BASE_RESOLUTION[0]
+    scale_y = current_resolution[1] / BASE_RESOLUTION[1]
 
-    xy_paths = str_to_xy(command_str, scale_factor_x, scale_factor_y)
-    all_commands = ""
+    xy_paths = str_to_xy(command_str, scale_x, scale_y)
     if xy_paths:
-        for path in xy_paths:
-            for i in range(len(path) - 1):
-                command = f"input swipe {path[i][0]} {path[i][1]} {path[i+1][0]} {path[i+1][1]} 0"
-                all_commands += command + "\n"
-        run_adb_command(all_commands)
+        adb_commands = []
+        # 处理单个点或多个点路径
+        if isinstance(xy_paths[0], tuple):
+            adb_commands.append(f"input tap {xy_paths[0][0]} {xy_paths[0][1]}")
+        else:
+            for path in xy_paths:
+                adb_commands.extend([f"input tap {x} {y}" for (x, y) in path])
+        # 一次性发送所有命令，减少 subprocess 开销
+        run_adb_command(adb_commands)
 
 def scale_coordinates(base_coordinates, scale_x, scale_y):
-    # 缩放所有坐标
-    return [[(int(x * scale_x), int(y * scale_y)) for (x, y) in path] for path in base_coordinates]
+    # 根据设备分辨率缩放坐标
+    if isinstance(base_coordinates[0], list):
+        return [[(int(x * scale_x), int(y * scale_y)) for (x, y) in path] for path in base_coordinates]
+    else:
+        x, y = base_coordinates
+        return [(int(x * scale_x), int(y * scale_y))]
 
 def str_to_xy(command_str, scale_x, scale_y):
+    # 将指令转换为坐标
     if command_str in BASE_COORDINATES:
         return scale_coordinates(BASE_COORDINATES[command_str], scale_x, scale_y)
-    else:
-        return None
+    return None
 
 if __name__ == "__main__":
-    # 执行滑动操作
-    swipe_screen("<")
-    swipe_screen("=")
+    # 确保以 root 权限运行
+    subprocess.run(["adb", "root"])  # 启动 adb root 权限
+    subprocess.run(["adb", "wait-for-device"])  # 等待设备准备好
+    # 执行点击操作
+    tap_screen("<")
+    tap_screen("=")

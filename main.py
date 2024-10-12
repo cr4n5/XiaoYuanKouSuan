@@ -1,155 +1,78 @@
-import json
-import sys
-import threading
-import subprocess
-import time
-import argparse
-import tkinter as tk
 from mitmproxy import http
 from mitmproxy.tools.main import mitmdump
+import re
+import threading
 import number_command
-import os
+import tkinter as tk
+from tkinter import messagebox
+import argparse
+import sys
 
-CONFIG_FILE = "user_config.json"
+# CONFIG
+dialog_shown = False
+answerCount = 30
 
-# 请求处理函数
 def request(flow: http.HTTPFlow) -> None:
     pass
 
-# 响应处理函数
 def response(flow: http.HTTPFlow) -> None:
+    global dialog_shown
     url = flow.request.url
-    if "https://xyks.yuanfudao.com/leo-math/android/exams?" in url:
-        handle_response(flow.response.text, "练习")
-    elif "https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match?" in url:
-        handle_response(flow.response.text, "pk")
+    print(f"Response: {flow.response.status_code} {url}")
 
-# 处理并解析响应信息
-def handle_response(response_text, answer_type):
-    try:
-        answer = json.loads(response_text)
-        print(json.dumps(answer, indent=4))  # 格式化输出
-        save_answers(answer, answer_type)
-    except json.JSONDecodeError:
-        print("JSON 解析错误")
+    if is_target_url(url):
+        handle_target_response(flow, url)
+    elif "https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match/v2?" in url:
+        if not dialog_shown:
+            dialog_shown = True
+            threading.Thread(target=gui_answer).start()
 
-# 保存答案
-def save_answers(answer, answer_type):
-    select_answer = parse_answers(answer, answer_type)
-    
-    # 保存到txt文件
-    with open("answer.txt", "w") as f:
-        f.write("  ".join(select_answer))
-    
-    # 启动GUI线程
-    threading.Thread(target=gui_answer, args=(select_answer,)).start()
+def is_target_url(url):
+    return re.search(r"leo\.fbcontent\.cn/bh5/leo-web-oral-pk/exercise_.*\.js", url)
 
-# 解析答案
-def parse_answers(answer, answer_type):
-    select_answer = []
-    questions = answer["questions"] if answer_type == "练习" else answer["examVO"]["questions"]
-    
-    for question in questions:
-        correct_answer = next((ans for ans in question["answers"] if "." in ans), question["answers"][0])
-        select_answer.append(correct_answer)
-        print(correct_answer, end="  ")
-    
-    return select_answer
+def handle_target_response(flow, url):
+    print(f"匹配到指定的 URL: {url}")
+    responsetext = flow.response.text
+    funname = extract_function_name(responsetext)
 
-# 执行滑动操作
-def answer_write(answer):
-    for ans in answer:
-        number_command.swipe_screen(ans)
-        time.sleep(0.3)  # 可根据需求调整
+    if funname:
+        update_response_text(flow, responsetext, funname)
+    else:
+        print("未找到匹配的函数名，无法进行替换。")
 
-# 读取用户配置
-def load_user_config():
-    if os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, 'r') as file:
-            return json.load(file).get("auto_continue", False)
-    return False
+def extract_function_name(responsetext):
+    match = re.search(r"(?<=isRight:)[^,]*?\(.*?\).*?(?=\|)", responsetext)
+    return match.group() if match else None
 
-# 保存用户配置
-def save_user_config(auto_continue):
-    with open(CONFIG_FILE, 'w') as file:
-        json.dump({"auto_continue": auto_continue}, file)
+def update_response_text(flow, responsetext, funname):
+    print(f"找到函数名: {funname}")
+    updated_text = responsetext.replace(funname, f"{funname}||true")
+    flow.response.text = updated_text
+    print(f"替换后的响应: {updated_text}")
+    threading.Thread(target=show_message_box, args=("过滤成功", f"函数 {funname} 替换成功!")).start()
 
-# GUI界面控制
-def gui_answer(answer):
+def show_message_box(title, message):
+    root = tk.Tk()
+    root.withdraw()
+    messagebox.showinfo(title, message)
+    root.destroy()
+
+def answer_write():
+    for _ in range(answerCount):
+        number_command.tap_screen(".")
+
+def gui_answer():
     root = tk.Tk()
     root.title("继续执行")
-
-    label = tk.Label(root, text="请待可作答时点击继续", font=("Helvetica", 14))
-    label.pack(pady=10, anchor="center")
-
-    description_label = tk.Label(root, text="自动继续状态变更，需待下一轮", font=("Arial", 10))
-    description_label.pack(pady=5)
-    label.pack(pady=10, anchor="center")
-
-    auto_continue = tk.BooleanVar(value=load_user_config())
-
-    auto_checkbox = tk.Checkbutton(root, text="自动继续", variable=auto_continue)
-    auto_checkbox.pack(pady=10)
-
-    def on_button_click():
-        save_user_config(auto_continue.get())  # 保存用户选择
-        root.destroy()  # 关闭窗口
-        answer_write(answer)  # 继续执行代码
-
-    button = tk.Button(root, text="点击继续", command=on_button_click)
+    button = tk.Button(root, text="点击继续", command=answer_write)
     button.pack(pady=20)
-
-    # 如果用户选择了自动继续，12.5秒后自动点击按钮
-    if auto_continue.get():
-        root.after(12500, on_button_click)
-
     root.mainloop()
 
-# 检查 adb 是否安装
-def check_adb_installed():
-    try:
-        result = subprocess.run(["adb", "devices"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        if result.returncode != 0:
-            print(f"ADB 检查失败: {result.stderr}")
-            sys.exit(1)
-    except FileNotFoundError:
-        print("ADB 未找到，请先安装 ADB 工具。")
-        sys.exit(1)
-
-# ADB 连接设备
-def connect_adb_wireless(adb_ip):
-    try:
-        # 指定编码为 utf-8
-        result = subprocess.run(["adb", "connect", adb_ip], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding='utf-8')
-        
-        # 确保 result.stdout 不为 None，并检查是否包含 "connected"
-        if result.stdout and "connected" in result.stdout:
-            print(f"已连接到 {adb_ip}")
-        else:
-            # 如果 stderr 有内容，则打印详细错误信息；否则提供默认提示
-            error_message = result.stderr if result.stderr else "请确认 IP 与端口是否正确"
-            print(f"ADB 连接失败: {error_message}")
-            sys.exit(1)
-    except subprocess.CalledProcessError as e:
-        print(f"ADB 连接错误: {e}")
-        sys.exit(1)
-
-
-# 主程序
 if __name__ == "__main__":
-    check_adb_installed()
-
-    # 解析命令行参数
     parser = argparse.ArgumentParser(description="Mitmproxy script")
     parser.add_argument("-P", "--port", type=int, default=8080, help="Port to listen on")
     parser.add_argument("-H", "--host", type=str, default="0.0.0.0", help="Host to listen on")
-    parser.add_argument("-AI", "--adb-ip", type=str, help="IP and port for ADB wireless connection (e.g., 192.168.0.101:5555)")
     args = parser.parse_args()
 
-    # 如果指定了 ADB IP，进行无线调试连接
-    if args.adb_ip:
-        connect_adb_wireless(args.adb_ip)
-
-    # 运行mitmdump
     sys.argv = ["mitmdump", "-s", __file__, "--listen-host", args.host, "--listen-port", str(args.port)]
     mitmdump()

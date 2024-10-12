@@ -39,8 +39,12 @@ https://github.com/cr4n5/XiaoYuanKouSuan/issues/31#issue-2579180244
 
 10.  重放响应body中，采用上传文件的方式，上传仓库中的[exercise.js](/exercise.js)
 
-11.  pk 场中任意答案都会判定正确，使用连点器即可 ps：有人提的 pr 把 adb shell 命令方式改了，有点影响速度，后续会修改，故此次更新不包含模拟点击
+11.  pk 场中任意答案都会判定正确，使用连点器即可
 
 ### 运用python
 
 见[原文档](/README.md)
+
+## Q&A :question:
+
+- 建议使用app version 3.93.2 [详情见](https://github.com/cr4n5/XiaoYuanKouSuan/issues/74)

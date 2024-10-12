@@ -27,11 +27,12 @@
 - [XiaoYuanKouSuan](#xiaoyuankousuan)
   - [战绩可查](#战绩可查)
   - [目录`以下内容为最原始方案，仅供参考`](#目录以下内容为最原始方案仅供参考)
-  - [演示视频](#演示视频)
+  - [演示视频 :movie\_camera:](#演示视频-movie_camera)
   - [碎碎念 :thought\_balloon:](#碎碎念-thought_balloon)
   - [环境配置 :hammer\_and\_wrench:](#环境配置-hammer_and_wrench)
   - [代码修改 :pencil2:](#代码修改-pencil2)
-  - [使用 :hammer\_and\_wrench:](#使用-hammer_and_wrench)
+  - [使用 :smile:](#使用-smile)
+  - [Q\&A :question:](#qa-question)
   - [贡献者 :heart:](#贡献者-heart)
   - [Star History :star:](#star-history-star)
 
@@ -58,6 +59,7 @@ https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00
 根据设备分辨率修改坐标（同元组内坐标连续滑动）
 
 ```python
+# 坐标点信息
 BASE_COORDINATES = {
     "1": [[1480, 1050], [1440, 1470]],
     "2": [[1255, 1100], [1700, 1100], [1255, 1470], [1700, 1470]],
@@ -67,7 +69,8 @@ BASE_COORDINATES = {
     "6": [[1533, 1027], [1265, 1428], [1663, 1439]],
     ">": [[[1350, 1080], [1545, 1172], [1295, 1297]]],
     "<": [[[1578, 1058], [1308, 1231], [1560, 1292]]],
-    "=": [[[1284, 1122], [1700, 1122], [1280, 1300], [1700, 1300]]]
+    "=": [[[1284, 1122], [1700, 1122], [1280, 1300], [1700, 1300]]],
+    ".": [1350, 1080]  # 单独的点
 }
 ```
 
@@ -82,15 +85,13 @@ adb shell wm size reset
 adb shell wm size 1800x2880
 ```
 
-根据所需更改每个题目间隔时间
+根据所需更改题目数量和等待时间：
 
 ```python
-def answer_write(answer):
-
-    for i in range(len(answer)):
-        number_command.swipe_screen(answer[i])
-        # time.sleep(0.16)
-        time.sleep(0.3)
+# CONFIG
+is_dialog_shown = False
+ANSWER_COUNT = 30
+WAITING_TIME = 12.5
 ```
 
 ## 使用 :smile:
@@ -235,7 +236,7 @@ def answer_write(answer):
 6. （方案三）进入设置，清除小猿口算缓存
    ![alt text](doc/img/773b1be382d61dfe65f13b421a8e6f3b.png)
    
-7. （方案三）pk 场中任意答案都会判定正确，使用连点器即可 ps：有人提的 pr 把 adb shell 命令方式改了，有点影响速度，后续会修改，故此次更新不包含模拟点击
+7. （方案三）pk 场中任意答案都会判定正确（现已更新模拟点击）
 
 ## Q&A :question:
 

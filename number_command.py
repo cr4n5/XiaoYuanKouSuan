@@ -1,3 +1,4 @@
+import time
 import subprocess
 from functools import lru_cache
 from typing import List, Tuple, Union
@@ -20,6 +21,15 @@ BASE_COORDINATES = {
     ".": [1350, 1080]  # 单独的点
 }
 
+NEXT_BUTTON_COORDINATES = {
+    "next_1": [1400, 900], 
+    "next_2": [2160, 1720], 
+    "next_3": [1475, 1490], 
+}
+
+scale_x = 1
+scale_y = 1
+
 @lru_cache()
 def get_device_resolution():
     # 获取设备的物理分辨率，并缓存
@@ -33,6 +43,7 @@ def get_device_resolution():
         raise Exception("无法获取设备分辨率")
 
 def run_adb_command(commands):
+
     # 执行 ADB 命令，减少 subprocess 调用次数
     try:
         command_str = "\n".join(commands) + "\n"
@@ -55,6 +66,7 @@ def get_tap_coordinates(command_str):
 def prepare_tap_commands(command_str: str, times: int) -> List[str]:
     xy_paths = str_to_xy(command_str, *map(lambda x: get_device_resolution()[x] / BASE_RESOLUTION[x], (0, 1)))
     adb_commands = []
+
     if xy_paths:
         if isinstance(xy_paths[0], tuple):
             x, y = xy_paths[0]
@@ -83,16 +95,45 @@ def scale_coordinates(base_coordinates, scale_x, scale_y):
         x, y = base_coordinates
         return [(int(x * scale_x), int(y * scale_y))]
 
+def scale_coordinates_for_tap(coordinate, scale_x, scale_y):
+    # 缩放一个点坐标
+    return [int(coordinate[0] * scale_x), int(coordinate[1] * scale_y)]
+
 def str_to_xy(command_str, scale_x, scale_y):
     # 将指令转换为坐标
     if command_str in BASE_COORDINATES:
         return scale_coordinates(BASE_COORDINATES[command_str], scale_x, scale_y)
     return None
 
+def click_screen(xy):
+    command = [f"input tap {xy[0]} {xy[1]}"]
+    run_adb_command(command)
+
+def next_round():
+    click_screen(scale_coordinates_for_tap(NEXT_BUTTON_COORDINATES["next_1"], scale_x, scale_y))
+    time.sleep(0.5)
+    click_screen(scale_coordinates_for_tap(NEXT_BUTTON_COORDINATES["next_2"], scale_x, scale_y))
+    time.sleep(0.5)
+    click_screen(scale_coordinates_for_tap(NEXT_BUTTON_COORDINATES["next_3"], scale_x, scale_y))
+
+# 未采用
+def test_root():
+    test_command = "id"
+    full_command = f"su -c \"{test_command}\""
+    result = subprocess.run(["adb", "shell", full_command], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    if result.returncode == 0:
+        print(f"Root 权限成功: {result.stdout}")
+    else:
+        print(f"Root 权限失败: {result.stderr}")
+
 if __name__ == "__main__":
+
     # 确保以 root 权限运行
     subprocess.run(["adb", "root"])  # 启动 adb root 权限
     subprocess.run(["adb", "wait-for-device"])  # 等待设备准备好
     # 执行点击操作
     tap_screen("<")
     tap_screen("=")
+
+    test_root()
+    # 执行滑动操作

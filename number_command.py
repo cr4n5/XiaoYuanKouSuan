@@ -42,6 +42,14 @@ def run_adb_command(commands):
     except Exception as e:
         print(f"ADB 命令执行失败: {e}")
         return None
+    
+def get_tap_coordinates(command_str):
+    current_resolution = get_device_resolution()
+    scale_x = current_resolution[0] / BASE_RESOLUTION[0]
+    scale_y = current_resolution[1] / BASE_RESOLUTION[1]
+
+    xy_paths = str_to_xy(command_str, scale_x, scale_y)
+    return xy_paths  # 返回坐标而不是发送命令
 
 def tap_screen(command_str):
     current_resolution = get_device_resolution()
@@ -57,6 +65,23 @@ def tap_screen(command_str):
         else:
             for path in xy_paths:
                 adb_commands.extend([f"input tap {x} {y}" for (x, y) in path])
+        # 一次性发送所有命令，减少 subprocess 开销
+        run_adb_command(adb_commands)
+
+def tap_screen_multiple(times):
+    # 获取 . 的坐标并进行缩放
+    xy_paths = get_tap_coordinates(".")
+    if xy_paths:
+        adb_commands = []
+        # 如果只有一个点，直接添加指定次数的命令
+        if isinstance(xy_paths[0], tuple):
+            x, y = xy_paths[0]
+            adb_commands.extend([f"input tap {x} {y}" for _ in range(times)])
+        else:
+            for path in xy_paths:
+                x, y = path[0]  # 假设每个路径只有一个点
+                adb_commands.extend([f"input tap {x} {y}" for _ in range(times)])
+
         # 一次性发送所有命令，减少 subprocess 开销
         run_adb_command(adb_commands)
 

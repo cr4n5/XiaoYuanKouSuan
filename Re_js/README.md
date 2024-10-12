@@ -24,20 +24,22 @@
 
 以上内容来自 酷安@XuanRan_Dev
 
+以下使用方式二选一
+
 ### 运用HttpCanary
 
 8. 进入设置，清除小猿口算缓存
-    ![alt text](doc/img/773b1be382d61dfe65f13b421a8e6f3b.png)
+    ![alt text](/doc/img/773b1be382d61dfe65f13b421a8e6f3b.png)
 
 - 教程视频
 
 https://github.com/cr4n5/XiaoYuanKouSuan/issues/31#issue-2579180244
 
-9. 按照方案二教程视频 找到类似url重放修改为https://leo.fbcontent.cn/bh5/leo-web-oral-pk/exercise_*.js
+1. 按照方案二教程视频 找到类似url重放修改为https://leo.fbcontent.cn/bh5/leo-web-oral-pk/exercise_*.js
 
-10. 重放响应body中，采用上传文件的方式，上传仓库中的[exercise.js](/exercise.js)
+2.  重放响应body中，采用上传文件的方式，上传仓库中的[exercise.js](/exercise.js)
 
-11. pk 场中任意答案都会判定正确，使用连点器即可 ps：有人提的 pr 把 adb shell 命令方式改了，有点影响速度，后续会修改，故此次更新不包含模拟点击
+3.  pk 场中任意答案都会判定正确，使用连点器即可 ps：有人提的 pr 把 adb shell 命令方式改了，有点影响速度，后续会修改，故此次更新不包含模拟点击
 
 ### 运用python
 

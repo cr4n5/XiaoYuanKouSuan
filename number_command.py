@@ -1,5 +1,6 @@
 import subprocess
 from functools import lru_cache
+from typing import List, Tuple, Union
 
 # 以作者的测试平板分辨率为基准（1800x2880）
 # 已在小米 13 测试（1080x2400）
@@ -51,29 +52,10 @@ def get_tap_coordinates(command_str):
     xy_paths = str_to_xy(command_str, scale_x, scale_y)
     return xy_paths  # 返回坐标而不是发送命令
 
-def tap_screen(command_str):
-    current_resolution = get_device_resolution()
-    scale_x = current_resolution[0] / BASE_RESOLUTION[0]
-    scale_y = current_resolution[1] / BASE_RESOLUTION[1]
-
-    xy_paths = str_to_xy(command_str, scale_x, scale_y)
+def prepare_tap_commands(command_str: str, times: int) -> List[str]:
+    xy_paths = str_to_xy(command_str, *map(lambda x: get_device_resolution()[x] / BASE_RESOLUTION[x], (0, 1)))
+    adb_commands = []
     if xy_paths:
-        adb_commands = []
-        # 处理单个点或多个点路径
-        if isinstance(xy_paths[0], tuple):
-            adb_commands.append(f"input tap {xy_paths[0][0]} {xy_paths[0][1]}")
-        else:
-            for path in xy_paths:
-                adb_commands.extend([f"input tap {x} {y}" for (x, y) in path])
-        # 一次性发送所有命令，减少 subprocess 开销
-        run_adb_command(adb_commands)
-
-def tap_screen_multiple(times):
-    # 获取 . 的坐标并进行缩放
-    xy_paths = get_tap_coordinates(".")
-    if xy_paths:
-        adb_commands = []
-        # 如果只有一个点，直接添加指定次数的命令
         if isinstance(xy_paths[0], tuple):
             x, y = xy_paths[0]
             adb_commands.extend([f"input tap {x} {y}" for _ in range(times)])
@@ -81,8 +63,16 @@ def tap_screen_multiple(times):
             for path in xy_paths:
                 x, y = path[0]  # 假设每个路径只有一个点
                 adb_commands.extend([f"input tap {x} {y}" for _ in range(times)])
+    return adb_commands
 
-        # 一次性发送所有命令，减少 subprocess 开销
+def tap_screen(command_str: str):
+    adb_commands = prepare_tap_commands(command_str, 1)
+    if adb_commands:
+        run_adb_command(adb_commands)
+
+def tap_screen_multiple(command_str: str, times: int):
+    adb_commands = prepare_tap_commands(command_str, times)
+    if adb_commands:
         run_adb_command(adb_commands)
 
 def scale_coordinates(base_coordinates, scale_x, scale_y):

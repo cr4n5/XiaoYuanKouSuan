@@ -60,25 +60,29 @@ def show_message_box(title, message):
     messagebox.showinfo(title, message)
     root.destroy()
 
-def answer_write():
+def answer_write(prepared_commands):
     start_time = time.time()
-    number_command.tap_screen_multiple(ANSWER_COUNT)
+    # 一次性发送准备好的 ADB 命令
+    number_command.run_adb_command(prepared_commands)
     end_time = time.time()
     print(f"点击操作耗时: {end_time - start_time:.3f}秒")
 
 def gui_answer():
+    # 预先准备 ADB 命令
+    prepared_commands = number_command.prepare_tap_commands(".", ANSWER_COUNT)
+
     root = tk.Tk()
     root.title("继续执行")
-    button = tk.Button(root, text="点击继续", command=answer_write)
+    button = tk.Button(root, text="点击继续", command=lambda: answer_write(prepared_commands))
     button.pack(pady=20)
 
-    # 设置定时器自动点击
-    threading.Timer(WAITING_TIME, auto_click_and_close, args=(root,)).start()
+    # 设置定时器自动执行
+    threading.Timer(WAITING_TIME, auto_click_and_close, args=(root, prepared_commands)).start()
 
     root.mainloop()
 
-def auto_click_and_close(root):
-    answer_write()
+def auto_click_and_close(root, prepared_commands):
+    answer_write(prepared_commands)
     global is_dialog_shown
     is_dialog_shown = False
     root.destroy()

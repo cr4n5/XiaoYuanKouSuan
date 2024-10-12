@@ -8,6 +8,7 @@ from tkinter import messagebox
 import argparse
 import sys
 import time
+import subprocess
 
 # CONFIG
 is_dialog_shown = False
@@ -60,8 +61,10 @@ def show_message_box(title, message):
     root.destroy()
 
 def answer_write():
-    for _ in range(ANSWER_COUNT):
-        number_command.tap_screen(".")
+    start_time = time.time()
+    number_command.tap_screen_multiple(ANSWER_COUNT)
+    end_time = time.time()
+    print(f"点击操作耗时: {end_time - start_time:.3f}秒")
 
 def gui_answer():
     root = tk.Tk()
@@ -80,11 +83,43 @@ def auto_click_and_close(root):
     is_dialog_shown = False
     root.destroy()
 
+# 检查 adb 是否安装
+def check_adb_installed():
+    try:
+        result = subprocess.run(["adb", "devices"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if result.returncode != 0:
+            print(f"ADB 检查失败: {result.stderr}")
+            sys.exit(1)
+    except FileNotFoundError:
+        print("ADB 未找到，请先安装 ADB 工具。")
+        sys.exit(1)
+
+# ADB 连接设备
+def connect_adb_wireless(adb_ip):
+    try:
+        result = subprocess.run(["adb", "connect", adb_ip], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if "connected" not in result.stdout:
+            print(f"ADB 连接失败: {result.stderr}")
+            sys.exit(1)
+        print(f"已连接到 {adb_ip}")
+    except subprocess.CalledProcessError as e:
+        print(f"ADB 连接错误: {e}")
+        sys.exit(1)
+
 if __name__ == "__main__":
+    check_adb_installed()
+
+    # 解析命令行参数
     parser = argparse.ArgumentParser(description="Mitmproxy script")
     parser.add_argument("-P", "--port", type=int, default=8080, help="Port to listen on")
     parser.add_argument("-H", "--host", type=str, default="0.0.0.0", help="Host to listen on")
+    parser.add_argument("-AI", "--adb-ip", type=str, help="IP and port for ADB wireless connection (e.g., 192.168.0.101:5555)")
     args = parser.parse_args()
 
+    # 如果指定了 ADB IP，进行无线调试连接
+    if args.adb_ip:
+        connect_adb_wireless(args.adb_ip)
+
+    # 运行mitmdump
     sys.argv = ["mitmdump", "-s", __file__, "--listen-host", args.host, "--listen-port", str(args.port)]
     mitmdump()

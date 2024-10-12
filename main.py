@@ -9,13 +9,43 @@ import argparse
 import sys
 import time
 import subprocess
+import getExerciseJs
+import json
+import os
 
 # CONFIG
 is_dialog_shown = False
 ANSWER_COUNT = 30
 WAITING_TIME = 12.5
+APP_PACKAGE_NAME = "com.fenbi.android.leo"
+CONFIG_FILE = "user_config.json"
+FIRST_RUN_KEY = "first_run"
 
-import getExerciseJs
+class UserConfig:
+    def __init__(self, config_file=CONFIG_FILE):
+        self.config_file = config_file
+        self.config = self.load_config()
+
+    def load_config(self):
+        # 加载配置文件
+        if not os.path.exists(self.config_file):
+            return {FIRST_RUN_KEY: True}
+        with open(self.config_file, "r") as f:
+            return json.load(f)
+
+    def save_config(self):
+        # 保存配置文件
+        with open(self.config_file, "w") as f:
+            json.dump(self.config, f)
+
+    def is_first_run(self):
+        # 检查是否为首次运行
+        return self.config.get(FIRST_RUN_KEY, True)
+
+    def mark_first_run_done(self):
+        # 标记首次运行已完成
+        self.config[FIRST_RUN_KEY] = False
+        self.save_config()
 
 def request(flow: http.HTTPFlow) -> None:
     pass
@@ -54,11 +84,6 @@ def update_response_text(flow, responsetext, funname):
     print(f"找到函数名: {funname}")
     updated_text = responsetext.replace(funname, f"{funname}||true")
     flow.response.text = updated_text
-    
-    # 保存js到exercise.js
-    with open("exercise.js", "w", encoding="utf-8") as f:
-        f.write(updated_text)
-    
     print(f"替换后的响应: {updated_text}")
     threading.Thread(target=show_message_box, args=("过滤成功", f"函数 {funname} 替换成功!")).start()
 
@@ -118,8 +143,24 @@ def connect_adb_wireless(adb_ip):
         print(f"ADB 连接错误: {e}")
         sys.exit(1)
 
+def clear_and_restart_app(package_name):
+    # 清除应用数据并重启应用
+    subprocess.run(["adb", "shell", "am", "force-stop", package_name])
+    # 还没想到如何仅清除缓存，先暂时用清除全部数据方式替换
+    subprocess.run(["adb", "shell", "pm", "clear", package_name])
+    subprocess.run(["adb", "shell", "am", "start", "-n", f"{package_name}/.activity.RouterActivity"])
+    print(f"已清除缓存并重启应用: {package_name}")
+
+
 if __name__ == "__main__":
     check_adb_installed()
+    config = UserConfig()
+
+    # 检查是否为首次运行
+    if config.is_first_run():
+        clear_and_restart_app(APP_PACKAGE_NAME)
+        config.mark_first_run_done()
+        show_message_box("首次运行", "应用已停止并清除缓存，现在重新启动...")
 
     # 解析命令行参数
     parser = argparse.ArgumentParser(description="Mitmproxy script")
@@ -132,7 +173,6 @@ if __name__ == "__main__":
     if args.adb_ip:
         connect_adb_wireless(args.adb_ip)
 
-    # 运行mitmdump
+    # 运行 mitmdump
     sys.argv = ["mitmdump", "-s", __file__, "--listen-host", args.host, "--listen-port", str(args.port)]
-
     mitmdump()

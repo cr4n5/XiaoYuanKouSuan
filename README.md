@@ -54,7 +54,7 @@ https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00
 
 > [!NOTE]
 >
-> 我们已在 [8d05233](https://github.com/cr4n5/XiaoYuanKouSuan/commit/8d0523390cdb09cbcb52bb7f80b8a9c795043f4c) 变更中增进了对不同分辨率设备的`实验性`支持，将借助 adb 自动获取设备当前分辨率并计算以进行适当缩放，因为您可以不用变更 `str_to_xy()` 函数；若该实验性支持未正常运作，请尝试性变更 [number_command.py](https://github.com/cr4n5/XiaoYuanKouSuan/blob/main/number_command.py) 中的 `BASE_COORDINATES ` 值，并将 `swipe_screen(command_str, base_resolution)` 函数中的 `base_resolution` 替换为您的设备当前分辨率。
+> 我们已在 [8d05233](https://github.com/cr4n5/XiaoYuanKouSuan/commit/8d0523390cdb09cbcb52bb7f80b8a9c795043f4c) 变更中增进了对不同分辨率设备的`实验性`支持，将借助 adb 自动获取设备当前分辨率并计算以进行适当缩放，因为您可以不用变更 `str_to_xy()` 函数；若该实验性支持未正常运作，请尝试性变更 [number_command.py](https://github.com/cr4n5/XiaoYuanKouSuan/blob/main/number_command.py) 中的 `BASE_COORDINATES ` 值，并将 `BASE_RESOLUTION` 常量中替换为您的设备当前分辨率。
 
 根据设备分辨率修改坐标（同元组内坐标连续滑动）
 
@@ -89,7 +89,6 @@ adb shell wm size 1800x2880
 
 ```python
 # CONFIG
-is_dialog_shown = False
 ANSWER_COUNT = 30
 WAITING_TIME = 12.5
 ```

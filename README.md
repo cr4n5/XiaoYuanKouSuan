@@ -21,11 +21,11 @@
 ![0.00s](doc/img/5c3b67fb34956a41a2322553f8f4069.jpg)
 在“READY GO”加载出来之前，可在画板滑动，即可达到 0.00s [0.0s 思路见此](https://github.com/xiaou61/XiaoYuanKousuan)
 
-## 目录`以下内容为最原始方案，仅供参考`
+## 目录
 
 - [XiaoYuanKouSuan](#xiaoyuankousuan)
   - [战绩可查](#战绩可查)
-  - [目录`以下内容为最原始方案，仅供参考`](#目录以下内容为最原始方案仅供参考)
+  - [目录](#目录)
   - [演示视频 :movie\_camera:](#演示视频-movie_camera)
   - [碎碎念 :thought\_balloon:](#碎碎念-thought_balloon)
   - [环境配置 :hammer\_and\_wrench:](#环境配置-hammer_and_wrench)
@@ -45,9 +45,15 @@ https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00
 
 ## 环境配置 :hammer_and_wrench:
 
-1. 已 root 的安卓设备(lsposed 等) :iphone:
-2. python3​ (version >= 3.10) :snake:
-3. adb :electric_plug:
+- 已 ROOT的安卓设备（Lsposed等） :iphone:
+
+- Python3​ （version >= 3.10） :snake:
+
+- ADB:electric_plug:
+
+- 小猿口算 App（version <= 3.93.2）
+
+  > 往上的版本（如 3.93.3）没实测，如 [#74](https://github.com/cr4n5/XiaoYuanKouSuan/issues/74) 推荐用旧版。
 
 ## 代码修改 :pencil2:
 
@@ -93,6 +99,10 @@ WAITING_TIME = 12.5 # 等待时间
 ```
 
 ## 使用 :smile:
+
+> [!CAUTION]
+>
+> 在首次使用之前，参考本节中 `第 6 条` 先对应用清除缓存！
 
 1. 安装依赖
 
@@ -246,8 +256,8 @@ WAITING_TIME = 12.5 # 等待时间
 
 6. （方案三）进入设置，清除小猿口算缓存
    ![alt text](doc/img/773b1be382d61dfe65f13b421a8e6f3b.png)
-   
-7. （方案三）pk 场中任意答案都会判定正确（现已更新模拟点击）
+
+   （方案三）pk 场中任意答案都会判定正确（现已更新模拟点击)
 
 ## Q&A :question:
 

@@ -5,8 +5,9 @@
 本项目已突破 0.00s
 
 - 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作 （已失效）
-- 方案二： 修改答案为“1”（强烈推荐使用方案二，可 0.00s，仅限练习场）[方案二链接](Change_Answer/README.md)
+- 方案二： 修改答案为“1”（可 0.00s，仅限练习场）[方案二链接](Change_Answer/README.md)
 - 方案三： 修改 pk 场 js 文件（仅限 pk 场）在此特别感谢 [Ulua3809](https://github.com/ulua3809)! [方案三链接](Re_js/README.md)
+- 其他思路：[Frida Hook](https://github.com/cr4n5/XiaoYuanKouSuan/issues/92)、[解密(1)](https://github.com/cr4n5/XiaoYuanKouSuan/issues/79)、[解密(2)](https://github.com/xmexg/xyks/issues/9)[解密(2)实现](https://github.com/xmexg/xyks/tree/master/frida/matchV2)
 
 ![Language](https://img.shields.io/badge/language-python-blue?logo=python)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
@@ -22,11 +23,11 @@
 ![0.00s](doc/img/5c3b67fb34956a41a2322553f8f4069.jpg)
 在“READY GO”加载出来之前，可在画板滑动，即可达到 0.00s [0.0s 思路见此](https://github.com/xiaou61/XiaoYuanKousuan)
 
-## 目录`以下内容为最原始方案，仅供参考`
+## 目录`以下部分内容为方案一，仅供参考`
 
 - [XiaoYuanKouSuan](#xiaoyuankousuan)
   - [战绩可查](#战绩可查)
-  - [目录`以下内容为最原始方案，仅供参考`](#目录以下内容为最原始方案仅供参考)
+  - [目录`以下部分内容为方案一，仅供参考`](#目录以下部分内容为方案一仅供参考)
   - [演示视频 :movie\_camera:](#演示视频-movie_camera)
   - [碎碎念 :thought\_balloon:](#碎碎念-thought_balloon)
   - [环境配置 :hammer\_and\_wrench:](#环境配置-hammer_and_wrench)

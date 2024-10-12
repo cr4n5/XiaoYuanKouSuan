@@ -1,18 +1,17 @@
 # XiaoYuanKouSuan
-
-`本项目仅供学习和研究使用请于24小时内删除。使用本项目所产生的任何后果由使用者自行承担。在使用本项目之前，请确保您已充分了解相关法律法规，并确保您的行为符合所在国家或地区的法律要求。未经授权的情况下，请勿将本项目用于商业用途或其他非法用途。`
-
-本项目已突破 0.00s
-
-- 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作 （已失效）
-- 方案二： 修改答案为“1”（强烈推荐使用方案二，可 0.00s，仅限练习场）[方案二链接](Change_Answer/README.md)
-- 方案三： 修改 pk 场 js 文件（仅限 pk 场）在此特别感谢 [Ulua3809](https://github.com/ulua3809)! [方案三链接](Re_js/README.md)
-
 ![Language](https://img.shields.io/badge/language-python-blue?logo=python)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
 ![Forks](https://img.shields.io/github/forks/cr4n5/XiaoYuanKouSuan.svg)
 ![Issues](https://img.shields.io/github/issues/cr4n5/XiaoYuanKouSuan.svg)
 ![Platform](https://img.shields.io/badge/platform-Android-green?logo=android)
+
+`本项目仅供学习和研究使用请于24小时内删除。使用本项目所产生的任何后果由使用者自行承担。在使用本项目之前，请确保您已充分了解相关法律法规，并确保您的行为符合所在国家或地区的法律要求。未经授权的情况下，请勿将本项目用于商业用途或其他非法用途。`
+
+本项目已突破 0.00s
+
+- 方案一： 基于方案三的思路，采用抓包自动替换 js 文件，通过 adb 模拟作答 （已改进、可用）
+- 方案二： 修改答案为“1”（强烈推荐使用方案二，可 0.00s，仅限练习场）[方案二链接](Change_Answer/README.md)
+- 方案三： 修改 pk 场 js 文件（仅限 pk 场）在此特别感谢 [Ulua3809](https://github.com/ulua3809)! [方案三链接](Re_js/README.md)
 
 - [安卓模拟器使用教程](README_EMULATOR.md)
 
@@ -88,9 +87,9 @@ adb shell wm size 1800x2880
 根据所需更改题目数量和等待时间：
 
 ```python
-# CONFIG
-ANSWER_COUNT = 30
-WAITING_TIME = 12.5
+# config.py
+ANSWER_COUNT = 30 // 题目数量
+WAITING_TIME = 12.5 // 等待时间
 ```
 
 ## 使用 :smile:
@@ -191,12 +190,25 @@ WAITING_TIME = 12.5
    运行格式为：
 
    ```shell
-   python main.py -H <host> -P <port> -AI <adb-ip>
+   $ ./python main.py --help
+   usage: main.py [-h] [-P PORT] [-H HOST] [-AI ADB_IP] [-CD]
+   
+   Mitmproxy script
+   
+   options:
+     -h, --help            show this help message and exit
+     -P PORT, --port PORT  Port to listen on
+     -H HOST, --host HOST  Host to listen on
+     -AI ADB_IP, --adb-ip ADB_IP
+                           IP and port for ADB wireless connection (e.g., 192.168.0.101:5555)
+     -CD, --clear-data     To clear app's all data
    ```
 
 > [!CAUTION]
 >
 > 有线调试情况下，无需指定 -AI 的参数，仅适用于**无线调试**
+>
+> **-CD, --clear-data** 会清除缓存与**数据**！
 
 绝大部分情况下，直接键入以下即可：
 

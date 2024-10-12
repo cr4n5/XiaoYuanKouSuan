@@ -48,3 +48,4 @@ https://github.com/cr4n5/XiaoYuanKouSuan/issues/31#issue-2579180244
 ## Q&A :question:
 
 - 建议使用app version 3.93.2 [详情见](https://github.com/cr4n5/XiaoYuanKouSuan/issues/74)
+- 运用HttpCanary时，出现白屏现象即仓库内exercise.js需要更新，可自行运行python进行更新exercise.js

@@ -12,7 +12,7 @@
 4. docker(非必须) :whale:
 ## 使用 :hammer_and_wrench:
 
-- [安卓模拟器使用教程](README_EMULATOR.md)
+- [安卓模拟器使用教程](../README_EMULATOR.md)
 
 [软件及模块](https://xuanrandev.lanzouw.com/b00qc8yij) 密码：5qiw
 

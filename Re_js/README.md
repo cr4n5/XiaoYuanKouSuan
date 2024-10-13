@@ -48,67 +48,6 @@ https://github.com/cr4n5/XiaoYuanKouSuan/issues/31#issue-2579180244
 见[原文档](/README.md)
 
 ### 运用docker
-安装docker
-
-#### Windows （并不推荐）
-```shell
-winget install "Docker Desktop"
-```
-
-#### 
-在 Arch Linux 上安装 Docker 并配置用户组的方法如下：
-
-### 安装 Docker
-1. **更新系统包数据库**：
-   ```sh
-   sudo pacman -Syu
-   ```
-
-2. **安装 Docker**：
-   ```sh
-   sudo pacman -S docker
-   ```
-
-### 配置用户组
-1. **创建 `docker` 用户组**（如果尚未创建）：
-   ```sh
-   sudo groupadd docker
-   ```
-
-2. **将当前用户添加到 `docker` 组**：
-   ```sh
-   sudo usermod -aG docker $USER
-   ```
-
-3. **重新启动 Docker 服务**：
-   ```sh
-   sudo systemctl start docker
-   sudo systemctl enable docker
-   ```
-
-4. **重新登录以使用户组更改生效**：
-   - 退出当前会话并重新登录，或者使用以下命令重新加载用户组：
-     ```sh
-     newgrp docker
-     ```
-
-### 验证安装
-1. **运行 `hello-world` 容器以验证 Docker 安装**：
-   ```sh
-   docker run hello-world
-   ```
-
-### 更新后的 
-
-README.md
-
- 文件
-```markdown
-### 运用python
-
-见[原文档](/README.md)
-
-### 运用docker
 
 ```shell
 # cd 到仓库文件夹 Re_js

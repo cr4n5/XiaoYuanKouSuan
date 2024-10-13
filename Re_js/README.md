@@ -9,7 +9,7 @@
 1. root 的安卓设备，虚拟机也可(lsposed,magisk 等) :iphone:
 2. python3(非必须) :snake:
 3. adb(非必须) :electric_plug:
-
+4. docker(非必须) :whale:
 ## 使用 :hammer_and_wrench:
 
 - [安卓模拟器使用教程](README_EMULATOR.md)
@@ -26,7 +26,7 @@
 
 以上内容来自 酷安@XuanRan_Dev
 
-以下使用方式二选一
+以下使用方式三选一
 
 ### 运用HttpCanary
 
@@ -46,6 +46,107 @@ https://github.com/cr4n5/XiaoYuanKouSuan/issues/31#issue-2579180244
 ### 运用python
 
 见[原文档](/README.md)
+
+### 运用docker
+安装docker
+
+#### Windows （并不推荐）
+```shell
+winget install "Docker Desktop"
+```
+
+#### 
+在 Arch Linux 上安装 Docker 并配置用户组的方法如下：
+
+### 安装 Docker
+1. **更新系统包数据库**：
+   ```sh
+   sudo pacman -Syu
+   ```
+
+2. **安装 Docker**：
+   ```sh
+   sudo pacman -S docker
+   ```
+
+### 配置用户组
+1. **创建 `docker` 用户组**（如果尚未创建）：
+   ```sh
+   sudo groupadd docker
+   ```
+
+2. **将当前用户添加到 `docker` 组**：
+   ```sh
+   sudo usermod -aG docker $USER
+   ```
+
+3. **重新启动 Docker 服务**：
+   ```sh
+   sudo systemctl start docker
+   sudo systemctl enable docker
+   ```
+
+4. **重新登录以使用户组更改生效**：
+   - 退出当前会话并重新登录，或者使用以下命令重新加载用户组：
+     ```sh
+     newgrp docker
+     ```
+
+### 验证安装
+1. **运行 `hello-world` 容器以验证 Docker 安装**：
+   ```sh
+   docker run hello-world
+   ```
+
+### 更新后的 
+
+README.md
+
+ 文件
+```markdown
+### 运用python
+
+见[原文档](/README.md)
+
+### 运用docker
+
+```shell
+# cd 到仓库文件夹 Re_js
+cd Re_js
+docker build -t xiaoyuan_plan_three .
+docker run -d -p 8080:8080 xiaoyuan_plan_three
+```
+
+![alt text](../doc/img/image.png)
+#### Windows 安装docker (并不推荐)
+```shell
+winget install "Docker Desktop"
+```
+
+#### Arch Linux 安装docker
+```sh
+# 更新系统包数据库
+sudo pacman -Syu
+
+# 安装 Docker
+sudo pacman -S docker
+
+# 创建 docker 用户组（如果尚未创建）
+sudo groupadd docker
+
+# 将当前用户添加到 docker 组
+sudo usermod -aG docker $USER
+
+# 重新启动 Docker 服务
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# 重新登录以使用户组更改生效
+newgrp docker
+
+# 验证 Docker 安装
+docker run hello-world
+```
 
 ## Q&A :question:
 

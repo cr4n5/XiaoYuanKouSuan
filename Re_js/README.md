@@ -2,6 +2,8 @@
 
 方案三
 
+- [IOS设备见此](https://github.com/cr4n5/XiaoYuanKouSuan/issues/91)
+
 ## 所需 :hammer_and_wrench:
 
 1. root 的安卓设备，虚拟机也可(lsposed,magisk 等) :iphone:
@@ -28,7 +30,7 @@
 
 ### 运用HttpCanary
 
-8. 进入设置，清除小猿口算缓存
+8. 进入设置，清除小猿口算缓存!!!（多多清除缓存!!!，有许多不成功的原因来自于此）
 ![alt text](/doc/img/773b1be382d61dfe65f13b421a8e6f3b.png)
 
 - 教程视频
@@ -48,3 +50,4 @@ https://github.com/cr4n5/XiaoYuanKouSuan/issues/31#issue-2579180244
 ## Q&A :question:
 
 - 建议使用app version 3.93.2 [详情见](https://github.com/cr4n5/XiaoYuanKouSuan/issues/74)
+- 运用HttpCanary时，出现白屏现象即仓库内exercise.js需要更新，可自行运行[getExercise.exe(无需python环境)](/getExercise.exe)进行更新exercise.js

@@ -1,17 +1,19 @@
 # XiaoYuanKouSuan
+
 ![Language](https://img.shields.io/badge/language-python-blue?logo=python)
 ![Stars](https://img.shields.io/github/stars/cr4n5/XiaoYuanKouSuan.svg)
 ![Forks](https://img.shields.io/github/forks/cr4n5/XiaoYuanKouSuan.svg)
 ![Issues](https://img.shields.io/github/issues/cr4n5/XiaoYuanKouSuan.svg)
 ![Platform](https://img.shields.io/badge/platform-Android-green?logo=android)
 
-> 本项目仅供学习和研究使用请于24小时内删除。使用本项目所产生的任何后果由使用者自行承担。在使用本项目之前，请确保您已充分了解相关法律法规，并确保您的行为符合所在国家或地区的法律要求。未经授权的情况下，请勿将本项目用于商业用途或其他非法用途。
+>本项目仅供学习和研究使用请于24小时内删除。使用本项目所产生的任何后果由使用者自行承担。在使用本项目之前，请确保您已充分了解相关法律法规，并确保您的行为符合所在国家或地区的法律要求。未经授权的情况下，请勿将本项目用于商业用途或其他非法用途。转载使用请标明出处。
 
 本项目已突破 0.00s
 
-- 方案一： 基于方案三的思路，采用抓包自动替换 js 文件，通过 adb 模拟作答 （已改进、可用）
-- 方案二： 修改答案为“1”（强烈推荐使用方案二，可 0.00s，仅限练习场）[方案二链接](Change_Answer/README.md)（已失效）
+- 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作 （已失效）
+- 方案二： 修改答案为“1”（可 0.00s，仅限练习场）[方案二链接](Change_Answer/README.md)
 - 方案三： 修改 pk 场 js 文件（仅限 pk 场）在此特别感谢 [Ulua3809](https://github.com/ulua3809)! [方案三链接](Re_js/README.md)
+- 其他思路：[Frida Hook](https://github.com/cr4n5/XiaoYuanKouSuan/issues/92)、[解密(1)](https://github.com/cr4n5/XiaoYuanKouSuan/issues/79)、[解密(2)](https://github.com/xmexg/xyks/issues/9)  [解密(2)实现](https://github.com/xmexg/xyks/tree/master/frida/matchV2)
 
 - [安卓模拟器使用教程](README_EMULATOR.md)
 
@@ -38,6 +40,8 @@
 ## 演示视频 :movie_camera:
 
 https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00
+
+本视频仅在`抖音@mmo` 有上传过，其他均为盗用，请勿相信。
 
 ## 碎碎念 :thought_balloon:
 
@@ -254,7 +258,7 @@ WAITING_TIME = 12.5 # 等待时间
 
    至此，您可以操作移动端设备给对方来点小小的技术震撼了lol。
 
-6. （方案三）进入设置，清除小猿口算缓存
+6. （方案三）进入设置，清除小猿口算缓存!!!（多多清除缓存!!!，有许多不成功的原因来自于此）
    ![alt text](doc/img/773b1be382d61dfe65f13b421a8e6f3b.png)
 
    （方案三）pk 场中任意答案都会判定正确（现已更新模拟点击)

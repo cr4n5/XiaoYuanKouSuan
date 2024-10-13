@@ -15,8 +15,6 @@ is_dialog_shown = False
 ANSWER_COUNT = 30
 WAITING_TIME = 12.5
 
-import getExerciseJs
-
 def request(flow: http.HTTPFlow) -> None:
     pass
 

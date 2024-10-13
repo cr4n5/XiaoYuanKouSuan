@@ -1,0 +1,3 @@
+ANSWER_COUNT = 30
+WAITING_TIME = 12.5
+APP_PACKAGE_NAME = "com.fenbi.android.leo"

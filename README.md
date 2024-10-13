@@ -15,7 +15,6 @@
 - 方案三： 修改 pk 场 js 文件（仅限 pk 场）在此特别感谢 [Ulua3809](https://github.com/ulua3809)! [方案三链接](Re_js/README.md)
 - 其他思路：[Frida Hook](https://github.com/cr4n5/XiaoYuanKouSuan/issues/92)、[解密(1)](https://github.com/cr4n5/XiaoYuanKouSuan/issues/79)、[解密(2)](https://github.com/xmexg/xyks/issues/9)  [解密(2)实现](https://github.com/xmexg/xyks/tree/master/frida/matchV2)
 
-
 - [安卓模拟器使用教程](README_EMULATOR.md)
 
 ## 战绩可查
@@ -24,11 +23,11 @@
 ![0.00s](doc/img/5c3b67fb34956a41a2322553f8f4069.jpg)
 在“READY GO”加载出来之前，可在画板滑动，即可达到 0.00s [0.0s 思路见此](https://github.com/xiaou61/XiaoYuanKousuan)
 
-## 目录`以下部分内容为方案一，仅供参考`
+## 目录
 
 - [XiaoYuanKouSuan](#xiaoyuankousuan)
   - [战绩可查](#战绩可查)
-  - [目录`以下部分内容为方案一，仅供参考`](#目录以下部分内容为方案一仅供参考)
+  - [目录](#目录)
   - [演示视频 :movie\_camera:](#演示视频-movie_camera)
   - [碎碎念 :thought\_balloon:](#碎碎念-thought_balloon)
   - [环境配置 :hammer\_and\_wrench:](#环境配置-hammer_and_wrench)
@@ -50,15 +49,21 @@ https://github.com/user-attachments/assets/e9ccfa25-4bdd-4b43-855c-af4a045dcb00
 
 ## 环境配置 :hammer_and_wrench:
 
-1. 已 root 的安卓设备(lsposed 等) :iphone:
-2. python3​ (version >= 3.10) :snake:
-3. adb :electric_plug:
+- 已 ROOT的安卓设备（Lsposed等） :iphone:
+
+- Python3​ （version >= 3.10） :snake:
+
+- ADB:electric_plug:
+
+- 小猿口算 App（version <= 3.93.2）
+
+  > 往上的版本（如 3.93.3）没实测，如 [#74](https://github.com/cr4n5/XiaoYuanKouSuan/issues/74) 推荐用旧版。
 
 ## 代码修改 :pencil2:
 
 > [!NOTE]
 >
-> 我们已在 [8d05233](https://github.com/cr4n5/XiaoYuanKouSuan/commit/8d0523390cdb09cbcb52bb7f80b8a9c795043f4c) 变更中增进了对不同分辨率设备的`实验性`支持，将借助 adb 自动获取设备当前分辨率并计算以进行适当缩放，因为您可以不用变更 `str_to_xy()` 函数；若该实验性支持未正常运作，请尝试性变更 [number_command.py](https://github.com/cr4n5/XiaoYuanKouSuan/blob/main/number_command.py) 中的 `BASE_COORDINATES ` 值，将`BASE_RESOLUTION` 常量中替换为您的设备当前分辨率。
+> 我们已在 [8d05233](https://github.com/cr4n5/XiaoYuanKouSuan/commit/8d0523390cdb09cbcb52bb7f80b8a9c795043f4c) 变更中增进了对不同分辨率设备的`实验性`支持，将借助 adb 自动获取设备当前分辨率并计算以进行适当缩放，因为您可以不用变更 `str_to_xy()` 函数；若该实验性支持未正常运作，请尝试性变更 [number_command.py](https://github.com/cr4n5/XiaoYuanKouSuan/blob/main/number_command.py) 中的 `BASE_COORDINATES ` 值，并将 `BASE_RESOLUTION` 常量中替换为您的设备当前分辨率。
 
 根据设备分辨率修改坐标（同元组内坐标连续滑动）
 
@@ -83,7 +88,7 @@ BASE_COORDINATES = {
 ```shell
 # 查看当前分辨率
 adb shell wm size
-#还原默认分辨率
+# 还原默认分辨率
 adb shell wm size reset
 # 更改分辨率为 1800x2880
 adb shell wm size 1800x2880
@@ -92,13 +97,16 @@ adb shell wm size 1800x2880
 根据所需更改题目数量和等待时间：
 
 ```python
-# CONFIG
-
-ANSWER_COUNT = 30
-WAITING_TIME = 12.5
+# config.py
+ANSWER_COUNT = 30 # 题目数量
+WAITING_TIME = 12.5 # 等待时间
 ```
 
 ## 使用 :smile:
+
+> [!CAUTION]
+>
+> 在首次使用之前，参考本节中 `第 6 条` 先对应用清除缓存！
 
 1. 安装依赖
 
@@ -124,7 +132,7 @@ WAITING_TIME = 12.5
 
      打开设置-开发者选项-无线调试，并记录界面显示的 IP 地址与端口
 
-     （大部分设备首次需要先把「有线调试步骤中」的 USB 调试打开，并在**有线连接**的前提下，同意随即弹出的**允许 USB 调试吗**窗口以完成对设备的调试授权，建议勾选一律允许该设备调试。完成授权后，即可拔掉数据线进行无线调试。）
+     （大部分设备首次需要先把「有线调试步骤中」的 USB 调试打开，并在**有线连接**的前提下，同意随即弹出的 **允许 USB 调试吗** 窗口以完成对设备的调试授权，建议勾选一律允许该设备调试。完成授权后，即可拔掉数据线进行无线调试。）
 
      键入指令：
 
@@ -196,12 +204,25 @@ WAITING_TIME = 12.5
    运行格式为：
 
    ```shell
-   python main.py -H <host> -P <port> -AI <adb-ip>
+   $ ./python main.py --help
+   usage: main.py [-h] [-P PORT] [-H HOST] [-AI ADB_IP] [-CD]
+   
+   Mitmproxy script
+   
+   options:
+     -h, --help            show this help message and exit
+     -P PORT, --port PORT  Port to listen on
+     -H HOST, --host HOST  Host to listen on
+     -AI ADB_IP, --adb-ip ADB_IP
+                           IP and port for ADB wireless connection (e.g., 192.168.0.101:5555)
+     -CD, --clear-data     To clear app's all data
    ```
 
 > [!CAUTION]
 >
 > 有线调试情况下，无需指定 -AI 的参数，仅适用于**无线调试**
+>
+> **-CD, --clear-data** 会清除缓存与**数据**！
 
 绝大部分情况下，直接键入以下即可：
 
@@ -239,8 +260,8 @@ WAITING_TIME = 12.5
 
 6. （方案三）进入设置，清除小猿口算缓存!!!（多多清除缓存!!!，有许多不成功的原因来自于此）
    ![alt text](doc/img/773b1be382d61dfe65f13b421a8e6f3b.png)
-   
-7. （方案三）pk 场中任意答案都会判定正确（现已更新模拟点击）
+
+   （方案三）pk 场中任意答案都会判定正确（现已更新模拟点击)
 
 ## Q&A :question:
 
@@ -255,6 +276,10 @@ WAITING_TIME = 12.5
 
     若在之前未进行过有线调试，需要至少完成有线调试步骤，以进行调试授权
 
+- 运行脚本加上 `-CD/--clear-data` 参数后，小猿口算的应用数据都没了？
+
+  很遗憾，能力有限，暂无法提供仅清除缓存的方式，而是直接清除应用全部数据，受此影响我们将该命令作为了可选参数。
+
 
 ## 贡献者 :heart:
 
@@ -263,16 +288,13 @@ WAITING_TIME = 12.5
 ![GitHub 贡献者](https://img.shields.io/github/contributors/cr4n5/XiaoYuanKouSuan)
 
 <!-- CONTRIBUTORS-START -->
-
 <a href="https://github.com/sd0ric4"><img src="https://avatars.githubusercontent.com/u/63280168?v=4&s=100" width="50" height="50" alt="sd0ric4" /></a>
 <a href="https://github.com/cr4n5"><img src="https://avatars.githubusercontent.com/u/136036346?v=4&s=100" width="50" height="50" alt="cr4n5" /></a>
+<a href="https://github.com/MultiWolf"><img src="https://avatars.githubusercontent.com/u/104704213?v=4&s=100" width="50" height="50" alt="MultiWolf" /></a>
 <a href="https://github.com/jhy354"><img src="https://avatars.githubusercontent.com/u/33386148?v=4&s=100" width="50" height="50" alt="jhy354" /></a>
 <a href="https://github.com/Fumeng24"><img src="https://avatars.githubusercontent.com/u/114860867?v=4&s=100" width="50" height="50" alt="Fumeng24" /></a>
-<a href="https://github.com/MultiWolf"><img src="https://avatars.githubusercontent.com/u/104704213?v=4&s=100" width="50" height="50" alt="MultiWolf" /></a>
-<a href="https://github.com/ulua3809"><img src="https://avatars.githubusercontent.com/u/63995396?v=4&s=100" width="50" height="50" alt="ulua3809" /></a>
-<a href="https://github.com/xiaou61"><img src="https://avatars.githubusercontent.com/u/113765024?v=4&s=100" width="50" height="50" alt="xiaou61" /></a>
+<a href="https://github.com/apps/github-actions"><img src="https://avatars.githubusercontent.com/in/15368?v=4&s=100" width="50" height="50" alt="github-actions[bot]" /></a>
 <a href="https://github.com/GSQZ"><img src="https://avatars.githubusercontent.com/u/83207347?v=4&s=100" width="50" height="50" alt="GSQZ" /></a>
-
 <!-- CONTRIBUTORS-END -->
 
 ## Star History :star:

@@ -7,6 +7,10 @@ import tkinter as tk
 from mitmproxy import http
 import config
 
+
+def is_target_url(url):
+    return re.search(r"leo\.fbcontent\.cn/bh5/leo-web-oral-pk/exercise_.*\.js", url)
+
 class ResponseHandler:
     def __init__(self):
         self.is_dialog_shown = False
@@ -19,36 +23,50 @@ class ResponseHandler:
         url = flow.request.url
         print(f"Response: {flow.response.status_code} {url}")
 
-        if self.is_target_url(url):
+        if is_target_url(url):
             self.handle_target_response(flow, url)
         elif "https://xyks.yuanfudao.com/leo-game-pk/android/math/pk/match/v2?" in url:
             if not self.is_dialog_shown:
                 self.is_dialog_shown = True
                 threading.Thread(target=self.gui_answer).start()
 
-    def is_target_url(self, url):
-        return re.search(r"leo\.fbcontent\.cn/bh5/leo-web-oral-pk/exercise_.*\.js", url)
-
     def handle_target_response(self, flow, url):
         print(f"匹配到指定的 URL: {url}")
-        responsetext = flow.response.text
-        funname = self.extract_function_name(responsetext)
+        self.update_response_text(flow, flow.response.text)
 
-        if funname:
-            self.update_response_text(flow, responsetext, funname)
-        else:
-            print("未找到匹配的函数名，无法进行替换。")
+    def update_response_text(self, flow, rt):
+        # 1. 取消PK准备动画
+        text = re.sub(r'"readyGoEnd"\)\}\),.{1,4}\)\}\),.{1,4}\)\}\),.{1,4}\)\}\)',
+                      r'"readyGoEnd")}),20)}),20)}),20)})', rt)
 
-    def extract_function_name(self, responsetext):
-        match = self.function_name_pattern.search(responsetext)
-        return match.group() if match else None
+        # 2. case 0 替换
+        text = re.sub(r'case 0:if(.{0,14})\.challengeCode(.{200,300})([a-zA-Z]{1,2})\("startExercise"\);',
+                      r'case 0:\3("startExercise");if\1.challengeCode\2', text)
 
-    def update_response_text(self, flow, responsetext, funname):
-        print(f"找到函数名: {funname}")
-        updated_text = responsetext.replace(funname, f"{funname}||true")
-        flow.response.text = updated_text
-        print(f"替换后的响应: {updated_text}")
-        threading.Thread(target=self.show_message_box, args=("过滤成功", f"函数 {funname} 替换成功!")).start()
+        # 3. 判断任何答案正确
+        text = re.sub(r'return .{3,5}\)\?1:0\},', r'return 1},', text)
+
+        # 4. 自动触发答题
+        text = re.sub(r'=function\(([a-zA-Z]{1,2}),([a-zA-Z]{1,2})\)\{([a-zA-Z]{1,2})&&\(([a-zA-Z]{1,2})\.value=',
+                      r"=function(\1,\2){\2({ recognizeResult: '', pathPoints: [[]], answer: 1, showReductionFraction: 0 });\3&&(\4.value=",
+                      text)
+
+        # 5. 直接判断所有答题完成
+        text = re.sub(r'\.value\+1>=[a-zA-Z]{1,2}\.value\.length\?([a-zA-Z]{1,2})\("finishExercise"\)',
+                      r'.value+1>=0?\1("finishExercise")', text)
+
+        # 6. 好友挑战PK修改时间为0.001
+        text = re.sub(r"correctCnt:(.{1,5}),costTime:(.{1,15}),updatedTime:(.{1,120})([a-zA-Z]{1,2})\.challengeCode",
+                      r"correctCnt:\1,costTime:\4.challengeCode?1:\2,updatedTime:\3\4.challengeCode", text)
+
+        # 7. 所有PK场次修改时间为0.001
+        text = re.sub(r"correctCnt:(.{1,5}),costTime:(.{1,15}),updatedTime:(.{1,120})([a-zA-Z]{1,2})\.challengeCode",
+                      r"correctCnt:\1,costTime:1,updatedTime:\3\4.challengeCode", text)
+
+        flow.response.text = text
+        print(f"替换后的响应: {text}")
+        threading.Thread(target=self.show_message_box, args=("过滤成功", f"替换成功!")).start()
+
 
     def show_message_box(self, title, message):
         root = tk.Tk()

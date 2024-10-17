@@ -14,7 +14,7 @@
 
 - 方案一： 小猿口算, 采用抓包方式获取题目和答案, 通过 adb 模拟滑动操作 （已失效）
 - 方案二： 修改答案为“1”（可 0.00s，仅限练习场）[方案二链接](Change_Answer/README.md)
-- 方案三： 修改 pk 场 js 文件（仅限 pk 场）在此特别感谢 [Ulua3809](https://github.com/ulua3809)! [方案三链接](Re_js/README.md) [废弃方案三中正则修改js(python文件暂未更新)，正则表达式按此更新](https://github.com/cr4n5/XiaoYuanKouSuan/issues/113)
+- 方案三： 修改 pk 场 js 文件（仅限 pk 场）在此特别感谢 [Ulua3809](https://github.com/ulua3809)! [方案三链接](Re_js/README.md) [废弃方案三中正则，使用HttpCanary等正则表达式按此更新](https://github.com/cr4n5/XiaoYuanKouSuan/issues/113)
 - [排行榜刷分](https://github.com/cr4n5/XiaoYuanKouSuan/issues/104)
 - PK 场开局秒提交（0.001s）及过大学生验证思路：[FoskyM/XiaoYuanKouSuan_Tutorial](https://github.com/FoskyM/XiaoYuanKouSuan_Tutorial)
 - 其他思路：[逆向笔记](https://github.com/xmexg/xyks)、[Frida Hook](https://github.com/cr4n5/XiaoYuanKouSuan/issues/92)、[解密(1)](https://github.com/cr4n5/XiaoYuanKouSuan/issues/79)、[解密(2)](https://github.com/xmexg/xyks/issues/9)  [解密(2)实现](https://github.com/xmexg/xyks/tree/master/frida/matchV2)、[修改app](https://github.com/cr4n5/XiaoYuanKouSuan/issues/108) 
